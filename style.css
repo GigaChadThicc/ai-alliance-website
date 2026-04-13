@@ -48,79 +48,6 @@ section {
 }
 
 /* =========================
-   Top Marquee
-   ========================= */
-
-.top-marquee-bar {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background: #f3f4f6;
-    border-bottom: 1px solid #e5e7eb;
-    white-space: nowrap;
-    z-index: 1040;
-}
-
-.marquee-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    animation: marquee-scroll 28s linear infinite;
-    will-change: transform;
-}
-
-.marquee-content {
-    display: inline-flex;
-    align-items: center;
-    flex-shrink: 0;
-    gap: 2.5rem;
-    padding: 0.7rem 2rem 0.7rem 0;
-    white-space: nowrap;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #374151;
-    line-height: 1.4;
-}
-
-.marquee-content span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    white-space: nowrap;
-}
-
-.marquee-content i {
-    flex-shrink: 0;
-    font-size: 1.05em;
-}
-
-.top-marquee-bar .bi-megaphone-fill {
-    color: #198754;
-}
-
-.top-marquee-bar .bi-cpu-fill {
-    color: #0d6efd;
-}
-
-.top-marquee-bar .bi-tree-fill {
-    color: #198754;
-}
-
-@keyframes marquee-scroll {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-.top-marquee-bar:hover .marquee-track,
-.top-marquee-bar:focus-within .marquee-track {
-    animation-play-state: paused;
-}
-
-/* =========================
    Header / Navbar
    ========================= */
 
@@ -1020,11 +947,6 @@ button:focus-visible,
 
 .events-hero,
 .events-status-section,
-.events-summary-section,
-.past-events-section {
-    padding: 4.5rem 0;
-}
-
 .events-hero {
     position: relative;
     overflow: hidden;
@@ -1113,32 +1035,11 @@ button:focus-visible,
 }
 
 .status-badge,
-.event-tag {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-}
-
 .status-badge {
     padding: 0.5rem 0.9rem;
 }
 
-.event-tag {
-    padding: 0.36rem 0.8rem;
-}
-
 .status-badge.ended,
-.event-tag.ended {
-    background: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
-}
-
 .events-heading-left {
     max-width: none;
     margin-left: 0;
@@ -1146,70 +1047,9 @@ button:focus-visible,
     margin-bottom: 1.75rem;
 }
 
-.events-summary-section .section-heading p,
-.past-events-section .section-heading p {
-    max-width: 48rem;
-    color: #4b5563;
-}
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
-}
-
-.summary-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1.35rem;
-    padding: 1.75rem 1.35rem;
-    text-align: center;
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
 .summary-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
-}
-
-.summary-card strong {
-    display: block;
-    font-size: 1.95rem;
-    line-height: 1.2;
-    color: #111827;
-    margin-bottom: 0.55rem;
-}
-
-.summary-card span {
-    display: block;
-    color: #4b5563;
-    line-height: 1.7;
-    font-weight: 600;
-}
-
-.year-block + .year-block {
-    margin-top: 3rem;
-}
-
-.year-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.85rem;
-    border-bottom: 1px solid #dbe4ee;
-}
-
-.year-header h3 {
-    margin: 0;
-    font-size: 1.7rem;
-    line-height: 1.35;
-    color: #111827;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
 }
 
 .year-header h3::before {
@@ -1218,77 +1058,6 @@ button:focus-visible,
     height: 1.5rem;
     border-radius: 999px;
     background: linear-gradient(180deg, #2563eb 0%, #16a34a 100%);
-}
-
-.year-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #eef2ff;
-    color: #1d4ed8;
-    border: 1px solid #c7d2fe;
-    border-radius: 999px;
-    padding: 0.45rem 0.85rem;
-    font-size: 0.9rem;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.event-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
-}
-
-.event-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1.35rem;
-    padding: 1.3rem 1.3rem 1.2rem;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    min-height: 100%;
-}
-
-.event-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
-    border-color: #cbd5e1;
-}
-
-.event-card-highlight {
-    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
-    border-color: #bfdbfe;
-}
-
-.event-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.9rem;
-    margin-bottom: 0.95rem;
-}
-
-.event-date {
-    display: inline-block;
-    font-size: 0.96rem;
-    font-weight: 800;
-    color: #1d4ed8;
-    letter-spacing: 0.01em;
-}
-
-.event-card h4 {
-    margin: 0 0 0.7rem;
-    font-size: 1.08rem;
-    line-height: 1.65;
-    color: #111827;
-    word-break: break-word;
-}
-
-.event-card p {
-    margin: 0;
-    color: #4b5563;
-    line-height: 1.8;
 }
 
 .site-footer {
@@ -1310,10 +1079,6 @@ button:focus-visible,
 
 @media (max-width: 991.98px) {
     .events-hero,
-    .events-summary-section,
-    .past-events-section {
-        padding: 4rem 0;
-    }
 
     .events-status-section {
         padding-top: 2rem;
@@ -1330,26 +1095,12 @@ button:focus-visible,
     }
 
     .summary-grid,
-    .event-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .year-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 767.98px) {
+        @media (max-width: 767.98px) {
     .events-container {
         width: min(1120px, calc(100% - 24px));
     }
 
     .events-hero,
-    .events-summary-section,
-    .past-events-section {
-        padding: 3.25rem 0;
-    }
 
     .events-status-section {
         padding-top: 1.5rem;
@@ -1371,43 +1122,11 @@ button:focus-visible,
 
     .events-status-card,
     .summary-card,
-    .event-card {
-        border-radius: 1.1rem;
-    }
-
-    .events-status-card {
+        .events-status-card {
         padding: 1.25rem;
     }
 
-    .summary-card {
-        padding: 1.35rem 1rem;
-    }
-
-    .summary-card strong {
-        font-size: 1.7rem;
-    }
-
-    .year-header h3 {
-        font-size: 1.4rem;
-    }
-
-    .event-card {
-        padding: 1.1rem 1.05rem 1rem;
-    }
-
-    .event-top {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 0.85rem;
-    }
-
-    .event-card h4 {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-}
-
-@media (max-width: 575.98px) {
+                        @media (max-width: 575.98px) {
     .events-hero h1 {
         font-size: 1.8rem;
     }
@@ -1418,16 +1137,7 @@ button:focus-visible,
 
     .status-badge,
     .year-count,
-    .event-tag {
-        font-size: 0.8rem;
-    }
-
-    .summary-card strong {
-        font-size: 1.55rem;
-    }
-}
-
-.events-status-actions {
+        .events-status-actions {
     margin-top: 1.25rem;
 }
 
@@ -1448,4 +1158,39 @@ button:focus-visible,
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(22, 163, 74, 0.22);
+}
+
+/* =========================
+   Media News Page
+   ========================= */
+
+.media-card {
+    transition: all 0.25s ease;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.media-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.media-thumb-wrap {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.media-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.media-meta {
+    font-size: 0.9rem;
+    color: #6b7280;
 }
