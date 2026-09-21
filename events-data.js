@@ -18,6 +18,7 @@
  *   agenda       （選填）議程，[{ time, item }]
  *   registration （選填）報名設定，url 為 null 時顯示停用的「報名即將開放」按鈕
  *   cover        卡片封面圖（即將舉行時請放直式海報）
+ *   homeImage    （選填）首頁「最新活動」使用的圖片，建議選橫式現場照；未填則用第一張照片
  *   photos       （選填）活動照片，[{ src, alt }]
  *   links        （選填）相關報導，[{ text, url }]
  */
@@ -83,6 +84,7 @@ window.EVENTS_DATA = [
         summary:
             "本聯盟大師講座於 7 月 29 日在三好國際酒店舉行，邀請台灣鈣鈦礦公司陳來助董事長以「從行天宮到外太空，AI 時代的產業創新」為題，分享其橫跨面板、傳統食品與新能源產業的實戰經驗。陳董事長指出，從在地民生產業到高科技與綠能，都是 AI 賦能與低碳轉型的舞台，並與企業領袖交流重塑營運體質、導入新科技與落實減碳管理的策略。",
         cover: "images/events/20260729/04.jpg",
+        homeImage: "images/events/20260729/03.jpg",
         photos: [
             { src: "images/events/20260729/01.jpg", alt: "7/29 大師講座現場照片" },
             { src: "images/events/20260729/02.jpg", alt: "7/29 大師講座現場照片" },

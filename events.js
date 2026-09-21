@@ -1,6 +1,8 @@
 /*
- * 活動專區渲染程式
- * 讀取 events-data.js 的 window.EVENTS_DATA，產生「即將舉行」與「活動回顧」。
+ * 活動渲染程式
+ * 讀取 events-data.js 的 window.EVENTS_DATA：
+ *   - 活動頁（events.html）：頁首倒數、時間軸、即將舉行、活動回顧
+ *   - 首頁（index.html）：「最新活動」區塊
  * 一般情況下不需修改本檔，新增活動請編輯 events-data.js。
  */
 (function () {
@@ -88,11 +90,11 @@
     }
 
     // 封面若是直式圖片（例如海報），改為對齊上緣，保留標題區
-    function markPortraitCovers(root) {
-        root.querySelectorAll(".past-cover img").forEach(img => {
+    function markPortraitCovers(root, selector = ".past-cover") {
+        root.querySelectorAll(`${selector} img`).forEach(img => {
             const check = () => {
                 if (img.naturalHeight > img.naturalWidth) {
-                    img.closest(".past-cover").classList.add("is-portrait");
+                    img.closest(selector).classList.add("is-portrait");
                 }
             };
             if (img.complete && img.naturalWidth) check();
@@ -375,15 +377,72 @@
         }
     }
 
+    // ---------- 首頁：最新活動 ----------
+
+    function renderHome(nextRoot, listRoot, upcoming, past) {
+        const next = upcoming[0];
+        if (nextRoot) {
+            if (next) {
+                const days = daysUntil(next.date);
+                nextRoot.innerHTML = `
+                    <a class="home-next" href="events.html#event-${escapeHtml(next.id)}">
+                        <span class="home-next-label">下一場活動</span>
+                        <span class="home-next-date">${formatDate(next.date)}</span>
+                        <span class="home-next-title">${escapeHtml(next.title)}${next.speaker ? `｜${escapeHtml(next.speaker)}` : ""}</span>
+                        <span class="home-next-days">${days === 0 ? "今天舉行" : `還有 ${days} 天`}</span>
+                    </a>`;
+            } else {
+                nextRoot.hidden = true;
+            }
+        }
+
+        // 首頁圖片順序：homeImage（指定）→ 第一張現場照片 → 封面
+        listRoot.innerHTML = past.slice(0, 3).map(e => {
+            const img = e.homeImage || (e.photos && e.photos[0] && e.photos[0].src) || e.cover;
+            return `
+                <div class="col-md-6 col-lg-4">
+                    <a class="home-event-card" href="events.html#event-${escapeHtml(e.id)}">
+                        <figure class="home-event-img">
+                            <img src="${escapeHtml(img)}" alt="" loading="lazy" width="800" height="500" data-fallback>
+                        </figure>
+                        <div class="home-event-body">
+                            <div class="past-date">
+                                <time datetime="${escapeHtml(e.date)}">${formatDate(e.date)}</time>
+                                ${typeBadge(e.type)}
+                            </div>
+                            <h3>${escapeHtml(e.title)}</h3>
+                            <p class="home-event-place"><i class="bi bi-geo-alt" aria-hidden="true"></i> ${escapeHtml(e.location)}</p>
+                        </div>
+                    </a>
+                </div>`;
+        }).join("");
+
+        attachImageFallback(listRoot);
+        markPortraitCovers(listRoot, ".home-event-img");
+    }
+
+    // ---------- 活動頁：從其他頁面帶 #event-xxx 連進來 ----------
+
+    function handleEventHash(byId, modal) {
+        const match = /^#event-(.+)$/.exec(window.location.hash);
+        if (!match) return;
+        const event = byId.get(match[1]);
+        const card = document.getElementById(`event-${match[1]}`);
+        if (!event || !card) return;
+
+        card.scrollIntoView({ block: "start" });
+
+        // 已舉辦的活動直接打開活動紀錄
+        if (daysUntil(event.date) < 0 && modal && window.bootstrap) {
+            const trigger = card.querySelector(".past-more");
+            window.bootstrap.Modal.getOrCreateInstance(modal).show(trigger);
+        }
+    }
+
     // ---------- 初始化 ----------
 
     document.addEventListener("DOMContentLoaded", function () {
         const data = Array.isArray(window.EVENTS_DATA) ? window.EVENTS_DATA : [];
-        const upcomingRoot = document.getElementById("upcoming-events");
-        const pastRoot = document.getElementById("past-events");
-        const modal = document.getElementById("eventModal");
-        if (!upcomingRoot || !pastRoot) return;
-
         const byId = new Map(data.map(e => [e.id, e]));
 
         const upcoming = data
@@ -393,6 +452,19 @@
         const past = data
             .filter(e => daysUntil(e.date) < 0)
             .sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
+        // 首頁
+        const homeList = document.getElementById("home-events");
+        if (homeList) {
+            renderHome(document.getElementById("home-next-event"), homeList, upcoming, past);
+        }
+
+        // 活動頁
+        const upcomingRoot = document.getElementById("upcoming-events");
+        const pastRoot = document.getElementById("past-events");
+        if (!upcomingRoot || !pastRoot) return;
+
+        const modal = document.getElementById("eventModal");
 
         upcomingRoot.innerHTML = upcoming.length
             ? upcoming.map(renderUpcoming).join("")
@@ -412,16 +484,24 @@
         if (timelineRoot) renderTimeline(timelineRoot, data);
 
         if (modal) {
+            let lastTrigger = null;
+
             modal.addEventListener("show.bs.modal", function (e) {
                 const trigger = e.relatedTarget;
                 const event = trigger && byId.get(trigger.dataset.eventId);
                 if (event) fillModal(modal, event);
+                lastTrigger = trigger || null;
             });
 
-            // 關閉時清空內容，避免下次開啟短暫閃現上一場活動
+            // 關閉時清空內容，並把焦點還給開啟它的按鈕
             modal.addEventListener("hidden.bs.modal", function () {
                 modal.querySelector(".modal-body").innerHTML = "";
+                if (lastTrigger && document.activeElement === document.body) {
+                    lastTrigger.focus();
+                }
             });
         }
+
+        handleEventHash(byId, modal);
     });
 })();
