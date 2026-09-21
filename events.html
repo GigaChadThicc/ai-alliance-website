@@ -30,10 +30,28 @@
         <p class="section-kicker">EVENTS</p>
         <h1>活動資訊</h1>
         <p class="section-desc">
-          本頁整理聯盟近期活動資訊與參與方式，主題聚焦於人工智慧、
-          永續轉型、溫室氣體盤查、節能管理與永續治理等面向，方便企業
-          與會員快速掌握最新講座、課程與交流活動。
+          本頁整理聯盟近期活動資訊與參與方式，主題聚焦於人工智慧、永續轉型、溫室氣體盤查、節能管理與永續治理等面向，方便企業與會員快速掌握最新講座、課程與交流活動。
         </p>
+      </div>
+    </section>
+
+    <section class="events-section" aria-labelledby="upcoming-title">
+      <div class="events-container">
+        <div class="events-section-head">
+          <h2 id="upcoming-title">即將舉行</h2>
+          <p>歡迎會員與企業夥伴報名參加</p>
+        </div>
+        <div id="upcoming-events"></div>
+      </div>
+    </section>
+
+    <section class="events-section" aria-labelledby="past-title">
+      <div class="events-container">
+        <div class="events-section-head">
+          <h2 id="past-title">活動回顧</h2>
+          <p>聯盟歷次講座與說明會紀錄</p>
+        </div>
+        <div id="past-events"></div>
       </div>
     </section>
 
@@ -56,6 +74,18 @@
     </section>
   </main>
 
+  <div class="modal fade event-modal" id="eventModal" tabindex="-1" aria-labelledby="eventModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="eventModalTitle"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="關閉"></button>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
   <footer class="bg-white border-top py-4">
     <div class="events-container text-center text-muted">
       <p class="mb-0">© 2026 國立雲林科技大學 數位AI和永續治理企業轉型服務產學聯盟. All Rights Reserved.</p>
@@ -64,5 +94,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="load-nav.js"></script>
+  <script src="events-data.js"></script>
+  <script src="events.js"></script>
 </body>
 </html>

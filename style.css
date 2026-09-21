@@ -933,11 +933,21 @@ button:focus-visible,
    ========================= */
 
 .events-page {
+    --ev-navy: #0f172a;
+    --ev-blue: #1d4ed8;
+    --ev-green: #15803d;
+    --ev-green-soft: #dcfce7;
+    --ev-text: #1f2937;
+    --ev-muted: #4b5563;
+    --ev-border: #e5e7eb;
+    --ev-surface: #ffffff;
+
     background:
         radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 22%),
         radial-gradient(circle at left top, rgba(22, 163, 74, 0.07), transparent 20%),
         linear-gradient(180deg, #f8fafc 0%, #f3f4f6 100%);
-    color: #1f2937;
+    color: var(--ev-text);
+    padding-bottom: 4rem;
 }
 
 .events-container {
@@ -945,8 +955,8 @@ button:focus-visible,
     margin: 0 auto;
 }
 
-.events-hero,
-.events-status-section,
+/* ---------- Hero ---------- */
+
 .events-hero {
     position: relative;
     overflow: hidden;
@@ -1001,13 +1011,411 @@ button:focus-visible,
     margin-bottom: 0;
 }
 
+/* ---------- Section headings ---------- */
+
+.events-section {
+    padding-top: 3.5rem;
+}
+
+.events-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--ev-border);
+}
+
+.events-section-head h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ev-navy);
+}
+
+.events-section-head p {
+    margin: 0;
+    color: var(--ev-muted);
+    font-size: 0.95rem;
+}
+
+.events-empty {
+    padding: 2rem;
+    border: 1px dashed #cbd5e1;
+    border-radius: 1rem;
+    color: var(--ev-muted);
+    text-align: center;
+    background: var(--ev-surface);
+}
+
+/* ---------- Shared: type badge & meta list ---------- */
+
+.event-type {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.event-type.is-lecture {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.event-type.is-briefing {
+    background: var(--ev-green-soft);
+    color: #166534;
+}
+
+.event-meta {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--ev-muted);
+}
+
+.event-meta li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    line-height: 1.6;
+}
+
+.event-meta .bi {
+    color: var(--ev-blue);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+/* ---------- Upcoming (featured) ---------- */
+
+.upcoming-card {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    background: var(--ev-surface);
+    border: 1px solid var(--ev-border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.upcoming-poster {
+    margin: 0;
+    background: var(--ev-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 海報完整顯示不裁切，多餘空間以深藍底補滿 */
+.upcoming-poster img {
+    width: 100%;
+    height: 100%;
+    max-height: 760px;
+    aspect-ratio: 1 / 1.414;
+    object-fit: contain;
+    display: block;
+}
+
+.upcoming-body {
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.upcoming-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+/* 倒數天數：本頁唯一的強調元素 */
+.upcoming-countdown {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    color: var(--ev-green);
+    font-weight: 700;
+}
+
+.upcoming-countdown strong {
+    font-size: 2.25rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.upcoming-series {
+    margin: 0;
+    color: var(--ev-muted);
+    font-weight: 500;
+}
+
+.upcoming-body h3 {
+    margin: 0.25rem 0 0;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--ev-navy);
+}
+
+.upcoming-speaker {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--ev-text);
+}
+
+.upcoming-desc {
+    margin: 0;
+    color: var(--ev-muted);
+    line-height: 1.9;
+    max-width: 38rem;
+}
+
+.agenda {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 3px solid var(--ev-green-soft);
+}
+
+.agenda li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0.75rem;
+    padding: 0.35rem 0 0.35rem 1rem;
+}
+
+.agenda time {
+    font-variant-numeric: tabular-nums;
+    color: var(--ev-green);
+    font-weight: 700;
+}
+
+.upcoming-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-top: auto;
+}
+
+.upcoming-actions .note {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ev-muted);
+}
+
+/* ---------- Buttons ---------- */
+
+.events-status-actions {
+    margin-top: 1.25rem;
+}
+
+.events-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.85rem 1.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+    color: #ffffff;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.events-cta-btn:hover,
+.events-cta-btn:focus-visible {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(22, 163, 74, 0.22);
+}
+
+.events-cta-btn:disabled,
+.events-cta-btn[aria-disabled="true"] {
+    background: #e5e7eb;
+    color: #4b5563;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.events-page a:focus-visible,
+.events-page button:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
+
+/* ---------- Past events grid ---------- */
+
+.past-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.past-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--ev-surface);
+    border: 1px solid var(--ev-border);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.past-cover {
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.past-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.past-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    flex: 1;
+}
+
+.past-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--ev-muted);
+    font-size: 0.92rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.past-body h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--ev-navy);
+}
+
+.past-excerpt {
+    margin: 0;
+    color: var(--ev-muted);
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-clamp: 3;
+}
+
+.past-more {
+    align-self: flex-start;
+    margin-top: auto;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    border: 0;
+    background: none;
+    color: var(--ev-blue);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+.past-more:hover {
+    color: #1e3a8a;
+}
+
+/* ---------- Modal ---------- */
+
+.event-modal .modal-content {
+    border: 0;
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+
+.event-modal .modal-header {
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.event-modal .modal-title {
+    font-weight: 700;
+    color: var(--ev-navy);
+    line-height: 1.4;
+}
+
+.event-modal .carousel {
+    background: var(--ev-navy);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.event-modal .carousel-item img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    display: block;
+}
+
+.event-modal .carousel-control-prev,
+.event-modal .carousel-control-next {
+    width: 3.5rem;
+}
+
+.event-modal .photo-count {
+    margin: -1rem 0 1.5rem;
+    font-size: 0.9rem;
+    color: var(--ev-muted);
+    text-align: right;
+}
+
+.event-modal .modal-summary {
+    line-height: 1.95;
+    color: var(--ev-text);
+}
+
+.event-modal h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ev-navy);
+    margin: 1.5rem 0 0.75rem;
+}
+
+.event-links {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.event-links li + li {
+    margin-top: 0.4rem;
+}
+
+/* ---------- Status card (join CTA) ---------- */
+
 .events-status-section {
-    padding-top: 2.25rem;
+    padding-top: 3.5rem;
 }
 
 .events-status-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ev-border);
     border-radius: 1.5rem;
     padding: 1.8rem;
     box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
@@ -1031,46 +1439,20 @@ button:focus-visible,
 .events-status-card p {
     margin: 0;
     line-height: 1.9;
-    color: #4b5563;
+    color: var(--ev-muted);
 }
 
-.status-badge,
 .status-badge {
+    display: inline-block;
     padding: 0.5rem 0.9rem;
-}
-
-.status-badge.ended,
-.events-heading-left {
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 1.75rem;
-}
-
-.summary-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
-}
-
-.year-header h3::before {
-    content: "";
-    width: 0.4rem;
-    height: 1.5rem;
     border-radius: 999px;
-    background: linear-gradient(180deg, #2563eb 0%, #16a34a 100%);
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
-.site-footer {
-    background: #ffffff;
-    border-top: 1px solid #e5e7eb;
-    padding: 1.25rem 0;
-}
-
-.site-footer p {
-    margin: 0;
-    color: #4b5563;
-    text-align: center;
-    line-height: 1.7;
+.status-badge.info {
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 /* =========================
@@ -1078,33 +1460,31 @@ button:focus-visible,
    ========================= */
 
 @media (max-width: 991.98px) {
-    .events-hero,
-
-    .events-status-section {
-        padding-top: 2rem;
-        padding-bottom: 4rem;
-    }
-
     .events-hero {
         padding: 4.75rem 0 4.5rem;
+    }
+
+    .upcoming-card {
+        grid-template-columns: 1fr;
+    }
+
+    .upcoming-poster img {
+        max-height: 560px;
+    }
+
+    .past-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .events-status-head {
         flex-direction: column;
         align-items: flex-start;
     }
+}
 
-    .summary-grid,
-        @media (max-width: 767.98px) {
+@media (max-width: 767.98px) {
     .events-container {
         width: min(1120px, calc(100% - 24px));
-    }
-
-    .events-hero,
-
-    .events-status-section {
-        padding-top: 1.5rem;
-        padding-bottom: 3.25rem;
     }
 
     .events-hero {
@@ -1120,13 +1500,30 @@ button:focus-visible,
         line-height: 1.85;
     }
 
-    .events-status-card,
-    .summary-card,
-        .events-status-card {
-        padding: 1.25rem;
+    .events-section,
+    .events-status-section {
+        padding-top: 2.5rem;
     }
 
-                        @media (max-width: 575.98px) {
+    .events-section-head {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .upcoming-body {
+        padding: 1.5rem;
+    }
+
+    .past-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .events-status-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 575.98px) {
     .events-hero h1 {
         font-size: 1.8rem;
     }
@@ -1135,29 +1532,19 @@ button:focus-visible,
         font-size: 1.3rem;
     }
 
-    .status-badge,
-    .year-count,
-        .events-status-actions {
-    margin-top: 1.25rem;
+    .agenda li {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
 
-.events-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.85rem 1.4rem;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
-    color: #ffffff;
-    font-weight: 700;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.events-cta-btn:hover,
-.events-cta-btn:focus {
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(22, 163, 74, 0.22);
+@media (prefers-reduced-motion: reduce) {
+    .events-cta-btn,
+    .events-cta-btn:hover,
+    .events-cta-btn:focus-visible {
+        transition: none;
+        transform: none;
+    }
 }
 
 /* =========================
