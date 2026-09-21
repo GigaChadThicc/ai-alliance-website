@@ -87,11 +87,32 @@
         });
     }
 
+    // 封面若是直式圖片（例如海報），改為對齊上緣，保留標題區
+    function markPortraitCovers(root) {
+        root.querySelectorAll(".past-cover img").forEach(img => {
+            const check = () => {
+                if (img.naturalHeight > img.naturalWidth) {
+                    img.closest(".past-cover").classList.add("is-portrait");
+                }
+            };
+            if (img.complete && img.naturalWidth) check();
+            else img.addEventListener("load", check, { once: true });
+        });
+    }
+
+    // 活動開始時間（以台灣時間 UTC+8 計算），取 time 欄位開頭的 HH:MM
+    function startDateTime(event) {
+        const match = /(\d{1,2}):(\d{2})/.exec(event.time || "");
+        const hh = match ? match[1].padStart(2, "0") : "00";
+        const mm = match ? match[2] : "00";
+        return new Date(`${event.date}T${hh}:${mm}:00+08:00`);
+    }
+
     // ---------- 即將舉行 ----------
 
     function countdownText(days) {
         if (days === 0) return `<span class="upcoming-countdown">今天舉行</span>`;
-        return `<span class="upcoming-countdown">倒數 <strong>${days}</strong> 天</span>`;
+        return `<span class="upcoming-countdown">還有 ${days} 天</span>`;
     }
 
     function registrationBlock(reg) {
@@ -233,6 +254,127 @@
             ${renderLinks(event.links)}`;
     }
 
+    // ---------- 頁首：下一場活動 ----------
+
+    function renderNextEvent(root, event) {
+        if (!event) {
+            root.innerHTML = `
+                <p class="next-event-label">下一場活動</p>
+                <p class="next-event-empty">近期活動規劃中，歡迎加入會員，第一時間收到通知。</p>
+                <a class="next-event-link" href="#past-title">看看過去的活動</a>`;
+            return;
+        }
+
+        root.innerHTML = `
+            <p class="next-event-label">下一場活動</p>
+            <p class="next-event-date">
+                <time datetime="${escapeHtml(event.date)}">${formatDate(event.date)}</time>
+            </p>
+            <h2 class="next-event-title">${escapeHtml(event.title)}</h2>
+            ${event.speaker ? `<p class="next-event-speaker">${escapeHtml(event.speaker)}</p>` : ""}
+            <div class="countdown" data-start="${startDateTime(event).toISOString()}">
+                <div class="countdown-unit"><span class="countdown-num" data-unit="d">0</span><span class="countdown-label">天</span></div>
+                <div class="countdown-unit"><span class="countdown-num" data-unit="h">00</span><span class="countdown-label">時</span></div>
+                <div class="countdown-unit"><span class="countdown-num" data-unit="m">00</span><span class="countdown-label">分</span></div>
+            </div>
+            <p class="visually-hidden countdown-sr"></p>
+            <a class="next-event-link" href="#event-${escapeHtml(event.id)}">查看活動詳情</a>`;
+
+        startCountdown(root.querySelector(".countdown"), root.querySelector(".countdown-sr"));
+    }
+
+    // 每 30 秒更新一次；只顯示到「分」，不做每秒跳動，避免干擾閱讀
+    function startCountdown(el, srText) {
+        if (!el) return;
+        const start = new Date(el.dataset.start);
+        const nums = {
+            d: el.querySelector('[data-unit="d"]'),
+            h: el.querySelector('[data-unit="h"]'),
+            m: el.querySelector('[data-unit="m"]')
+        };
+
+        function tick() {
+            const diff = start - new Date();
+            if (diff <= 0) {
+                el.outerHTML = `<p class="countdown-live">活動進行中，歡迎蒞臨</p>`;
+                srText.textContent = "";
+                clearInterval(timer);
+                return;
+            }
+            const totalMin = Math.floor(diff / 60000);
+            const d = Math.floor(totalMin / 1440);
+            const h = Math.floor((totalMin % 1440) / 60);
+            const m = totalMin % 60;
+            nums.d.textContent = d;
+            nums.h.textContent = String(h).padStart(2, "0");
+            nums.m.textContent = String(m).padStart(2, "0");
+            srText.textContent = `距離活動開始還有 ${d} 天 ${h} 小時 ${m} 分`;
+        }
+
+        const timer = setInterval(tick, 30000);
+        tick();
+    }
+
+    // ---------- 頁首：活動時間軸 ----------
+
+    function renderTimeline(root, events) {
+        if (!events.length) {
+            root.hidden = true;
+            return;
+        }
+
+        const sorted = [...events].sort((a, b) => parseDate(a.date) - parseDate(b.date));
+        const nextId = (sorted.find(e => daysUntil(e.date) >= 0) || {}).id;
+        const pastCount = sorted.filter(e => daysUntil(e.date) < 0).length;
+
+        // 進度線：填到最後一場已舉辦的活動節點為止
+        const progress = sorted.length > 1
+            ? Math.max(0, pastCount - 1) / (sorted.length - 1)
+            : 0;
+
+        const items = sorted.map(e => {
+            const date = parseDate(e.date);
+            const label = `${date.getMonth() + 1}/${date.getDate()}`;
+            const name = escapeHtml(e.shortTitle || e.type);
+            const isPast = daysUntil(e.date) < 0;
+            const isNext = e.id === nextId;
+            const state = isPast ? "is-past" : isNext ? "is-next" : "is-future";
+
+            // 已舉辦：開啟活動紀錄；未舉辦：捲動到即將舉行區塊
+            const control = isPast
+                ? `<button type="button" class="tl-node" data-bs-toggle="modal" data-bs-target="#eventModal"
+                          data-event-id="${escapeHtml(e.id)}"
+                          aria-label="${label} ${name}，已舉辦，查看活動紀錄">`
+                : `<a class="tl-node" href="#event-${escapeHtml(e.id)}"
+                      aria-label="${label} ${name}，即將舉行，查看活動資訊">`;
+            const close = isPast ? "</button>" : "</a>";
+
+            return `
+                <li class="tl-item ${state}" ${isNext ? 'aria-current="step"' : ""}>
+                    ${control}
+                        <span class="tl-dot" aria-hidden="true"></span>
+                        <span class="tl-date" aria-hidden="true">${label}</span>
+                        <span class="tl-name" aria-hidden="true">${name}</span>
+                        ${isNext ? '<span class="tl-tag" aria-hidden="true">即將舉行</span>' : ""}
+                    ${close}
+                </li>`;
+        }).join("");
+
+        root.innerHTML = `
+            <div class="tl-scroll">
+                <ol class="tl-list" style="--tl-count: ${sorted.length}; --tl-progress: ${progress};">
+                    ${items}
+                </ol>
+            </div>`;
+
+        // 手機寬度下時間軸可橫向捲動，預設捲到下一場活動的位置
+        const scroller = root.querySelector(".tl-scroll");
+        const nextNode = root.querySelector(".tl-item.is-next");
+        if (nextNode && scroller.scrollWidth > scroller.clientWidth) {
+            scroller.scrollLeft = nextNode.offsetLeft - scroller.clientWidth / 2 + nextNode.offsetWidth / 2;
+        }
+    }
+
     // ---------- 初始化 ----------
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -262,6 +404,12 @@
 
         attachImageFallback(upcomingRoot);
         attachImageFallback(pastRoot);
+        markPortraitCovers(pastRoot);
+
+        const nextRoot = document.getElementById("next-event");
+        const timelineRoot = document.getElementById("events-timeline");
+        if (nextRoot) renderNextEvent(nextRoot, upcoming[0]);
+        if (timelineRoot) renderTimeline(timelineRoot, data);
 
         if (modal) {
             modal.addEventListener("show.bs.modal", function (e) {

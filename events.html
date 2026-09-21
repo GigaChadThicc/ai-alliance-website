@@ -27,11 +27,20 @@
   <main id="main-content" class="events-page">
     <section class="events-hero">
       <div class="events-container">
-        <p class="section-kicker">EVENTS</p>
-        <h1>活動資訊</h1>
-        <p class="section-desc">
-          本頁整理聯盟近期活動資訊與參與方式，主題聚焦於人工智慧、永續轉型、溫室氣體盤查、節能管理與永續治理等面向，方便企業與會員快速掌握最新講座、課程與交流活動。
-        </p>
+        <div class="events-hero-grid">
+          <div class="events-hero-text">
+            <p class="section-kicker">EVENTS</p>
+            <h1>活動資訊</h1>
+            <p class="section-desc">
+              本頁整理聯盟近期活動資訊與參與方式，主題聚焦於人工智慧、永續轉型、溫室氣體盤查、節能管理與永續治理等面向，方便企業與會員快速掌握最新講座、課程與交流活動。
+            </p>
+          </div>
+          <!-- 下一場活動卡片：由 events.js 依 events-data.js 自動產生 -->
+          <aside class="next-event" id="next-event" aria-label="下一場活動"></aside>
+        </div>
+
+        <!-- 活動時間軸：由 events.js 自動產生 -->
+        <nav class="events-timeline" id="events-timeline" aria-label="活動時間軸"></nav>
       </div>
     </section>
 

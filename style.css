@@ -1003,6 +1003,258 @@ button:focus-visible,
     margin-bottom: 1rem;
 }
 
+/* ---------- Hero：左文字、右下一場活動 ---------- */
+
+.events-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+    gap: 3rem;
+    align-items: center;
+}
+
+.next-event {
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 1.25rem;
+    padding: 1.5rem 1.6rem;
+    box-shadow: 0 24px 50px rgba(2, 6, 23, 0.35);
+}
+
+.next-event-label {
+    margin: 0 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #15803d;
+}
+
+.next-event-date {
+    margin: 0;
+    color: #4b5563;
+    font-variant-numeric: tabular-nums;
+}
+
+.next-event .next-event-title {
+    margin: 0.35rem 0 0.25rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #0f172a;
+}
+
+.next-event-speaker {
+    margin: 0;
+    color: #4b5563;
+}
+
+.next-event-empty {
+    margin: 0 0 1rem;
+    color: #4b5563;
+    line-height: 1.8;
+}
+
+/* 倒數計時：本頁唯一的強調元素 */
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 1.25rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.countdown-unit {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.countdown-unit + .countdown-unit {
+    border-left: 1px solid #e5e7eb;
+}
+
+.countdown-num {
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #15803d;
+    font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.countdown-live {
+    margin: 1.25rem 0;
+    padding: 0.85rem;
+    border-radius: 0.75rem;
+    background: #dcfce7;
+    color: #166534;
+    font-weight: 700;
+    text-align: center;
+}
+
+.next-event-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: #1d4ed8;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+.next-event-link:hover {
+    color: #1e3a8a;
+}
+
+/* ---------- Hero：活動時間軸 ---------- */
+
+.events-timeline {
+    margin-top: 3rem;
+}
+
+.tl-scroll {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 0.25rem;
+}
+
+.tl-list {
+    --tl-dot: 18px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--tl-count), minmax(120px, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* 底線與進度線：從第一個節點中心畫到最後一個節點中心 */
+.tl-list::before,
+.tl-list::after {
+    content: "";
+    position: absolute;
+    top: calc(0.75rem + var(--tl-dot) / 2 - 1.5px);
+    left: calc(100% / var(--tl-count) / 2);
+    height: 3px;
+    border-radius: 3px;
+}
+
+.tl-list::before {
+    right: calc(100% / var(--tl-count) / 2);
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.tl-list::after {
+    width: calc((100% - 100% / var(--tl-count)) * var(--tl-progress));
+    background: #86efac;
+}
+
+.tl-item {
+    position: relative;
+    z-index: 1;
+}
+
+.tl-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 0.5rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: none;
+    color: #ffffff;
+    text-align: center;
+}
+
+.tl-node:hover .tl-name {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.events-hero .tl-node:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.tl-dot {
+    position: relative;
+    width: var(--tl-dot);
+    height: var(--tl-dot);
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    background: #1e3a8a;
+}
+
+.tl-item.is-past .tl-dot {
+    border-color: #86efac;
+    background: #86efac;
+}
+
+.tl-item.is-next .tl-dot {
+    border-color: #86efac;
+    background: #ffffff;
+}
+
+/* 下一場活動節點的呼吸光圈 */
+.tl-item.is-next .tl-dot::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid #86efac;
+    animation: tl-pulse 2.4s ease-out infinite;
+}
+
+@keyframes tl-pulse {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.tl-date {
+    margin-top: 0.25rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.tl-name {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.tl-item.is-next .tl-name {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.tl-tag {
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background: #86efac;
+    color: #14532d;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* 直式封面（海報）對齊上緣，保留標題區 */
+.past-cover.is-portrait img {
+    object-position: center top;
+}
+
+/* 錨點跳轉時避開固定的導覽列 */
+.events-page [id^="event-"],
+.events-page #past-title {
+    scroll-margin-top: 110px;
+}
+
 .section-desc {
     max-width: 48rem;
     font-size: 1.08rem;
@@ -1137,7 +1389,6 @@ button:focus-visible,
     gap: 0.75rem;
 }
 
-/* 倒數天數：本頁唯一的強調元素 */
 .upcoming-countdown {
     display: inline-flex;
     align-items: baseline;
@@ -1146,11 +1397,7 @@ button:focus-visible,
     font-weight: 700;
 }
 
-.upcoming-countdown strong {
-    font-size: 2.25rem;
-    line-height: 1;
-    letter-spacing: -0.02em;
-}
+
 
 .upcoming-series {
     margin: 0;
@@ -1461,7 +1708,16 @@ button:focus-visible,
 
 @media (max-width: 991.98px) {
     .events-hero {
-        padding: 4.75rem 0 4.5rem;
+        padding: 4.75rem 0 3.5rem;
+    }
+
+    .events-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .next-event {
+        max-width: 480px;
     }
 
     .upcoming-card {
@@ -1488,7 +1744,22 @@ button:focus-visible,
     }
 
     .events-hero {
-        padding: 4rem 0 3.75rem;
+        padding: 3.5rem 0 2.75rem;
+    }
+
+    .events-timeline {
+        margin-top: 2rem;
+    }
+
+    /* 清單寬度跟著節點撐開，底線才會延伸到可捲動的範圍 */
+    .tl-list {
+        grid-template-columns: repeat(var(--tl-count), 112px);
+        width: max-content;
+        min-width: 100%;
+    }
+
+    .countdown-num {
+        font-size: 2.2rem;
     }
 
     .events-hero h1 {
@@ -1539,6 +1810,12 @@ button:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .tl-item.is-next .tl-dot::after {
+        animation: none;
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+
     .events-cta-btn,
     .events-cta-btn:hover,
     .events-cta-btn:focus-visible {

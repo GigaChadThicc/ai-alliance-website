@@ -9,9 +9,10 @@
  *   date         活動日期，格式 "YYYY-MM-DD"
  *   type         "大師講座" 或 "推廣說明會"
  *   title        活動標題
+ *   shortTitle   （選填）時間軸上顯示的短標題，建議 8 字以內
  *   series       （選填）系列名稱，顯示在標題上方
  *   speaker      （選填）講者
- *   time         活動時間
+ *   time         活動時間，開頭的時間（例如 14:30）會用來計算頁首倒數
  *   location     活動地點
  *   summary      活動說明（即將舉行）或活動摘要（活動回顧）
  *   agenda       （選填）議程，[{ time, item }]
@@ -26,6 +27,7 @@ window.EVENTS_DATA = [
         id: "20261001",
         date: "2026-10-01",
         type: "大師講座",
+        shortTitle: "黑幼龍董事長講座",
         series: "產業轉型論壇｜掌握變局，開創新局",
         title: "企業轉型的契機與展望",
         speaker: "黑幼龍 董事長",
@@ -51,6 +53,7 @@ window.EVENTS_DATA = [
         id: "20260914",
         date: "2026-09-14",
         type: "推廣說明會",
+        shortTitle: "活動推廣說明會",
         title: "雲麒數位 AI 永續轉型產學聯盟活動推廣說明會",
         time: "15:30–20:00",
         location: "三好國際酒店",
@@ -72,6 +75,7 @@ window.EVENTS_DATA = [
         id: "20260729",
         date: "2026-07-29",
         type: "大師講座",
+        shortTitle: "陳來助董事長講座",
         title: "從行天宮到外太空，AI 時代的產業創新",
         speaker: "台灣鈣鈦礦公司 陳來助 董事長",
         time: "14:50–18:30",
@@ -83,7 +87,7 @@ window.EVENTS_DATA = [
             { src: "images/events/20260729/01.jpg", alt: "7/29 大師講座現場照片" },
             { src: "images/events/20260729/02.jpg", alt: "7/29 大師講座現場照片" },
             { src: "images/events/20260729/03.jpg", alt: "7/29 大師講座現場照片" },
-            { src: "images/events/20260729/04.jpg", alt: "7/29 大師講座現場照片" }
+            { src: "images/events/20260729/04.jpg", alt: "7/29 大師講座活動海報" }
         ],
         links: [
             {
@@ -100,6 +104,7 @@ window.EVENTS_DATA = [
         id: "20260722",
         date: "2026-07-22",
         type: "推廣說明會",
+        shortTitle: "合作推廣說明會",
         title: "雲麒數位 AI 永續轉型產學聯盟合作推廣說明會",
         time: "17:30–20:00",
         location: "米多利休閒農莊",
@@ -109,10 +114,10 @@ window.EVENTS_DATA = [
             { time: "17:30–18:30", item: "聯盟介紹與合作機制說明" },
             { time: "18:30–20:00", item: "貴賓餐敘" }
         ],
-        // 挑好現場照片後：把 cover 改成 01.jpg，並在 photos 加入照片
+        // 挑好現場照片後，在 photos 加入照片（例如 01.jpg、02.jpg）
         cover: "images/events/20260722/04.jpg",
         photos: [
-            { src: "images/events/20260527/01.jpg", alt: "5/27 大師講座現場照片" }
+            { src: "images/events/20260722/04.jpg", alt: "7/22 合作推廣說明會活動海報" }
         ],
         links: []
     },
@@ -120,6 +125,7 @@ window.EVENTS_DATA = [
         id: "20260527",
         date: "2026-05-27",
         type: "大師講座",
+        shortTitle: "黃冠華執董講座",
         title: "旭榮集團如何走向 ACE 之路！AI、Coach、ESG",
         speaker: "旭榮集團 黃冠華 執行董事",
         time: "14:30–17:30",
@@ -131,7 +137,7 @@ window.EVENTS_DATA = [
             { src: "images/events/20260527/01.jpg", alt: "5/27 大師講座現場照片" },
             { src: "images/events/20260527/02.jpg", alt: "5/27 大師講座現場照片" },
             { src: "images/events/20260527/03.jpg", alt: "5/27 大師講座現場照片" },
-            { src: "images/events/20260527/04.jpg", alt: "5/27 大師講座現場照片" }
+            { src: "images/events/20260527/04.jpg", alt: "5/27 大師講座活動海報" }
         ],
         links: [
             {
