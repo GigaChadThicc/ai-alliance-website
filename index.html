@@ -6,6 +6,9 @@
     <title>數位AI和永續治理企業轉型服務產學聯盟</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light">
@@ -16,82 +19,96 @@
 
     <main id="main-content" tabindex="-1">
 
-    <section class="hero-section text-center">
-        <div class="container">
-            <span class="badge bg-success px-3 py-2 mb-3 rounded-pill fs-6 shadow-sm border border-light">2026 AI 轉型 x 永續治理</span>
-            
-            <h1 class="display-4 fw-bold mb-4">引領企業邁向數位 AI 與永續治理雙軸轉型</h1>
-            <p class="lead mb-5 mx-auto text-light" style="max-width: 800px; line-height: 1.8;">
-                面對破壞性變革的衝擊，我們整合國立雲林科技大學與跨領域專家資源，提供 AI 導入、組織碳盤查與企業印記轉型之一站式服務，協助企業推動 AI 轉型與永續升級。
-            </p>
-            
-            <a href="#services" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill fw-bold tracking-wide">
-                探索解決方案 <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
-            </a>
+    <section class="hero-orbit" aria-labelledby="hero-title">
+        <!-- 同心圓：聯盟在中心，三大服務由內向外擴散 -->
+        <svg class="hero-orbit-svg" viewBox="-500 -500 1000 1000" role="img"
+             aria-label="圓心左半是 AI 晶片、右半是地球，代表數位 AI 與永續兩個主軸；由內向外依序為 AI 智慧製造、永續治理與碳盤查、企業轉型服務">
+            <defs>
+                <clipPath id="core-left"><path d="M0,-125 A125,125 0 0,0 0,125 Z"></path></clipPath>
+                <clipPath id="core-right"><path d="M0,-125 A125,125 0 0,1 0,125 Z"></path></clipPath>
+            </defs>
+
+            <circle class="ripple" r="125"></circle>
+
+            <circle class="ring ring-faint ring-5" r="500"></circle>
+            <circle class="ring ring-faint ring-4" r="420"></circle>
+            <circle class="ring ring-3" r="330"></circle>
+            <circle class="ring ring-2" r="255"></circle>
+            <circle class="ring ring-1" r="180"></circle>
+
+            <g class="orbit orbit-1"><circle class="orbit-dot is-green" cx="180" cy="0" r="5"></circle><circle class="orbit-dot" cx="-180" cy="0" r="3"></circle></g>
+            <g class="orbit orbit-2"><circle class="orbit-dot" cx="0" cy="255" r="4"></circle><circle class="orbit-dot is-green" cx="0" cy="-255" r="3.5"></circle></g>
+            <g class="orbit orbit-3"><circle class="orbit-dot is-green" cx="-330" cy="0" r="4.5"></circle><circle class="orbit-dot" cx="233" cy="233" r="3"></circle></g>
+            <g class="orbit orbit-4"><circle class="orbit-dot" cx="0" cy="420" r="3"></circle></g>
+
+            <g class="ring-label label-1"><circle cx="134" cy="-120" r="4"></circle><text x="148" y="-114">AI 智慧製造</text></g>
+            <g class="ring-label label-2"><circle cx="174" cy="-186" r="4"></circle><text x="188" y="-180">永續治理與碳盤查</text></g>
+            <g class="ring-label label-3"><circle cx="203" cy="-260" r="4"></circle><text x="217" y="-254">企業轉型服務</text></g>
+
+            <!-- 圓心：左半取 banner.png 的 AI 晶片，右半取地球 -->
+            <g class="core">
+                <image href="images/banner.png" x="-310.1" y="-203.7" width="977.8" height="414.8" clip-path="url(#core-left)" preserveAspectRatio="none"></image>
+                <image href="images/banner.png" x="-782.1" y="-215.7" width="977.8" height="414.8" clip-path="url(#core-right)" preserveAspectRatio="none"></image>
+                <line class="core-divider" x1="0" y1="-125" x2="0" y2="125"></line>
+                <circle class="core-edge" r="125"></circle>
+            </g>
+        </svg>
+
+        <div class="container hero-orbit-inner">
+            <div class="hero-copy">
+                <h1 id="hero-title">AI 導入、碳盤查<br>與組織轉型</h1>
+                <p class="hero-lead">
+                    本聯盟整合國立雲林科技大學與跨領域專家資源，為企業提供 AI 導入、組織碳盤查與企業印記轉型的診斷、教育訓練及實作輔導。
+                </p>
+                <div class="hero-actions">
+                    <a href="#services" class="btn hero-btn-primary">查看三大服務</a>
+                    <a href="events.html" class="btn hero-btn-secondary">近期活動與課程</a>
+                </div>
+            </div>
         </div>
     </section>
-    
 
     <section id="services" class="section-white py-5">
         <div class="container py-4">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold">聯盟三大核心主軸</h2>
-                <p class="text-muted">全方位協助產業界推動 AI 轉型、永續治理與組織升級</p>
+            <div class="home-head">
+                <h2>聯盟三大核心主軸</h2>
+                <p>全方位協助產業界推動 AI 轉型、永續治理與組織升級</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm card-hover p-3 text-center">
-                        <div class="card-body">
-                            <i class="bi bi-cpu display-4 text-primary mb-3 d-block" aria-hidden="true"></i>
-                            <h4 class="fw-bold">AI 智慧製造技術</h4>
-                            <p class="text-muted text-start mt-3">提供 AI+AOI 影像辨識、生成式 AI、智慧排程與生產優化。協助企業建立數據基礎，實現製程優化與能源管理智慧化。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm card-hover p-3 text-center">
-                        <div class="card-body">
-                            <i class="bi bi-tree display-4 text-success mb-3 d-block" aria-hidden="true"></i>
-                            <h4 class="fw-bold">永續治理與碳盤查</h4>
-                            <p class="text-muted text-start mt-3">輔導導入 ISO 14064 溫室氣體盤查、ISO 14067 產品碳足跡、廢污水再生與智慧化能資源管理，實現企業碳排可視化。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm card-hover p-3 text-center">
-                        <div class="card-body">
-                            <i class="bi bi-people display-4 text-warning mb-3 d-block" aria-hidden="true"></i>
-                            <h4 class="fw-bold">企業轉型服務技術</h4>
-                            <p class="text-muted text-start mt-3">透過「企業印記轉型」與「學習型組織」理論，提供客製化教育訓練與系統思考，從營運、組織至文化層面協助企業實現深度變革。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <a href="solutions.html" class="btn btn-outline-success px-4 py-2 fw-bold rounded-pill">查看解決方案與服務管道</a>
-            </div>
+            <ul class="pillars">
+                <li class="pillar">
+                    <h3>AI 智慧製造技術</h3>
+                    <p>提供 AI+AOI 影像辨識、生成式 AI、智慧排程與生產優化。協助企業建立數據基礎，實現製程優化與能源管理智慧化。</p>
+                </li>
+                <li class="pillar">
+                    <h3>永續治理與碳盤查</h3>
+                    <p>輔導導入 ISO 14064 溫室氣體盤查、ISO 14067 產品碳足跡、廢污水再生與智慧化能資源管理，實現企業碳排可視化。</p>
+                </li>
+                <li class="pillar">
+                    <h3>企業轉型服務技術</h3>
+                    <p>透過「企業印記轉型」與「學習型組織」理論，提供客製化教育訓練與系統思考，從營運、組織至文化層面協助企業實現深度變革。</p>
+                </li>
+            </ul>
+            <p class="mt-4 mb-0"><a class="home-more" href="solutions.html">查看解決方案與服務管道</a></p>
         </div>
     </section>
 
     <section id="latest-events" class="section-tint py-5" aria-labelledby="latest-events-title">
         <div class="container py-4">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold" id="latest-events-title">最新活動</h2>
-                <p class="text-muted">聯盟定期舉辦大師講座與推廣說明會，與企業夥伴面對面交流</p>
+            <div class="home-head">
+                <h2 id="latest-events-title">最新活動</h2>
+                <p>聯盟定期舉辦大師講座與推廣說明會，與企業夥伴面對面交流</p>
             </div>
             <div id="home-next-event" class="mb-4"></div>
             <div id="home-events" class="row g-4"></div>
-            <div class="text-center mt-5">
-                <a href="events.html" class="btn btn-outline-success px-4 py-2 fw-bold rounded-pill">查看所有活動</a>
-            </div>
+            <p class="mt-4 mb-0"><a class="home-more" href="events.html">查看所有活動與課程</a></p>
         </div>
     </section>
 
     <section id="membership" class="section-white py-5">
         <div class="container py-4">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold">加入聯盟，共創加值經濟</h2>
-                <p class="text-muted">提供分級制權益服務，滿足不同規模企業的轉型需求</p>
+            <div class="home-head">
+                <h2>加入聯盟，共創加值經濟</h2>
+                <p>提供分級制權益服務，滿足不同規模企業的轉型需求</p>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
@@ -113,7 +130,7 @@
                 
                 <div class="col-lg-4 col-md-6">
                     <div class="card h-100 border-dark border-opacity-25 shadow-sm card-hover position-relative">
-                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">熱門選擇</span>
+                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">推薦方案</span>
                         <div class="card-header bg-dark text-white text-center py-3">
                             <h5 class="mb-0 fw-bold">核心會員</h5>
                         </div>

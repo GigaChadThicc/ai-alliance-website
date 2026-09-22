@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>會員專區 - 數位AI和永續治理企業轉型服務產學聯盟</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light membership-page">
     <a class="skip-link visually-hidden-focusable" href="#main-content">跳到主要內容</a>
@@ -19,7 +22,6 @@
             <div class="container py-5 mt-4 mt-lg-5">
                 <div class="row align-items-center g-4">
                     <div class="col-lg-7">
-                        <span class="membership-eyebrow"><i class="bi bi-stars" aria-hidden="true"></i> 會員方案</span>
                         <h1 class="display-4 fw-bold mb-3">加入聯盟，讓 AI 與永續轉型真正落地</h1>
                         <p class="lead text-secondary mb-4">依企業規模與導入深度提供分級會員服務，從教育訓練、專家診斷到計畫申請與技術開發，協助企業用更有效率的方式展開數位轉型。</p>
                         <div class="d-flex flex-wrap gap-3 membership-hero-actions">
@@ -33,64 +35,37 @@
                         </ul>
                     </div>
                     <div class="col-lg-5">
-                        <div class="membership-overview-card shadow-sm">
-                            <div class="overview-grid">
-                                <div class="overview-item">
-                                    <span class="overview-label">會員層級</span>
-                                    <strong>3 種方案</strong>
-                                </div>
-                                <div class="overview-item">
-                                    <span class="overview-label">最低門檻</span>
-                                    <strong>$3,000 / 年</strong>
-                                </div>
-                                <div class="overview-item">
-                                    <span class="overview-label">訓練名額</span>
-                                    <strong>5–15 人次</strong>
-                                </div>
-                                <div class="overview-item">
-                                    <span class="overview-label">輔導資源</span>
-                                    <strong>診斷 / 諮詢 / 計畫申請</strong>
-                                </div>
-                            </div>
-                            <div class="overview-note">
-                                <i class="bi bi-info-circle" aria-hidden="true"></i>
-                                方案內容依聯盟計畫書規範設計，可作為企業導入 AI 與永續治理服務的起點。
-                            </div>
-                        </div>
+                        <dl class="membership-facts">
+                            <div><dt>會員層級</dt><dd>3 種方案</dd></div>
+                            <div><dt>最低門檻</dt><dd>$3,000 / 年</dd></div>
+                            <div><dt>訓練名額</dt><dd>5–15 人次</dd></div>
+                            <div><dt>輔導資源</dt><dd>診斷 / 諮詢 / 計畫申請</dd></div>
+                        </dl>
+                        <p class="membership-facts-note">方案內容依聯盟計畫書規範設計，可作為企業導入 AI 與永續治理服務的起點。</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="container membership-benefits py-4 py-lg-5" aria-label="加入會員的主要價值">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <article class="benefit-card h-100">
-                        <div class="benefit-icon"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
-                        <h2 class="h5 fw-bold">人才培訓</h2>
-                        <p class="mb-0 text-secondary">透過聯合教育訓練與實務講座，協助企業建立 AI 與永續治理的共通知識基礎。</p>
-                    </article>
-                </div>
-                <div class="col-md-4">
-                    <article class="benefit-card h-100">
-                        <div class="benefit-icon"><i class="bi bi-building-gear" aria-hidden="true"></i></div>
-                        <h2 class="h5 fw-bold">專家輔導</h2>
-                        <p class="mb-0 text-secondary">透過診斷、訪廠與諮詢服務，協助企業盤點問題、釐清導入方向與優先順序。</p>
-                    </article>
-                </div>
-                <div class="col-md-4">
-                    <article class="benefit-card h-100">
-                        <div class="benefit-icon"><i class="bi bi-diagram-3" aria-hidden="true"></i></div>
-                        <h2 class="h5 fw-bold">資源媒合</h2>
-                        <p class="mb-0 text-secondary">串接產學合作、外部資源與技術移轉資源，提升企業在轉型與研發上的落地效率。</p>
-                    </article>
-                </div>
-            </div>
+            <ul class="pillars">
+                <li class="pillar">
+                    <h3>人才培訓</h3>
+                    <p>透過聯合教育訓練與實務講座，協助企業建立 AI 與永續治理的共通知識基礎。</p>
+                </li>
+                <li class="pillar">
+                    <h3>專家輔導</h3>
+                    <p>透過診斷、訪廠與諮詢服務，協助企業盤點問題、釐清導入方向與優先順序。</p>
+                </li>
+                <li class="pillar">
+                    <h3>資源媒合</h3>
+                    <p>串接產學合作、外部資源與技術移轉資源，提升企業在轉型與研發上的落地效率。</p>
+                </li>
+            </ul>
         </section>
 
         <section id="plans" class="container py-4 py-lg-5" aria-labelledby="plans-title">
             <div class="section-heading text-center mb-5">
-                <span class="section-kicker">Membership Plans</span>
                 <h2 id="plans-title" class="fw-bold">選擇最適合企業現況的會員方案</h2>
                 <p class="text-secondary mb-0">從基礎參與到深度合作，依企業需求彈性選擇。</p>
             </div>
@@ -99,7 +74,6 @@
                 <div class="col-lg-4">
                     <article class="card pricing-card pricing-card-general h-100 border-0 shadow-sm" aria-labelledby="general-title">
                         <div class="pricing-header bg-general">
-                            <p class="plan-type mb-2">Basic</p>
                             <h3 id="general-title">一般會員</h3>
                             <p class="plan-description mb-0">適合剛開始接觸聯盟資源的企業</p>
                         </div>
@@ -121,9 +95,8 @@
 
                 <div class="col-lg-4">
                     <article class="card pricing-card pricing-card-core h-100 border-0 shadow-lg" aria-labelledby="core-title">
-                        <div class="hot-badge">熱門選擇</div>
+                        <div class="hot-badge">推薦方案</div>
                         <div class="pricing-header bg-core">
-                            <p class="plan-type mb-2">Recommended</p>
                             <h3 id="core-title">核心會員</h3>
                             <p class="plan-description mb-0">適合已規劃導入專案的企業</p>
                         </div>
@@ -146,7 +119,6 @@
                 <div class="col-lg-4">
                     <article class="card pricing-card pricing-card-honorary h-100 border-0 shadow-sm" aria-labelledby="honorary-title">
                         <div class="pricing-header bg-honorary text-dark">
-                            <p class="plan-type mb-2">Premium</p>
                             <h3 id="honorary-title">榮譽會員</h3>
                             <p class="plan-description mb-0">適合需要深度合作與高階輔導的企業</p>
                         </div>
@@ -194,7 +166,6 @@
         <section id="comparison" class="container py-4 pb-5" aria-labelledby="comparison-title">
             <div class="comparison-card bg-white p-4 p-md-5 rounded-4 shadow-sm mt-2">
                 <div class="section-heading text-center mb-4">
-                    <span class="section-kicker">Comparison Table</span>
                     <h2 id="comparison-title" class="fw-bold">聯盟分級權益詳細對照表</h2>
                     <p class="text-secondary mb-0">快速比較各級會員在訓練、輔導與計畫支援上的差異。</p>
                 </div>

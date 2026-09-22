@@ -4,6 +4,7 @@
  *   - 活動頁（events.html）：頁首倒數、時間軸、即將舉行、活動回顧
  *   - 活動頁（events.html）：人才培訓課程（讀取 window.COURSES_DATA）
  *   - 首頁（index.html）：「最新活動」區塊
+ *   - 媒體報導頁（cases.html）：從活動與課程的 links 自動產生報導列表
  * 一般情況下不需修改本檔，新增活動請編輯 events-data.js。
  */
 (function () {
@@ -390,9 +391,9 @@
 
         if (done === total) return { key: "done", text: "已結訓" };
         if (done === 0 && !todayIsClass) {
-            return { key: "soon", text: `即將開課・${formatShortDate(sorted[0])} 起` };
+            return { key: "soon", text: `即將開課（${formatShortDate(sorted[0])} 起）` };
         }
-        return { key: "live", text: `進行中・已完成 ${done}／${total} 堂` };
+        return { key: "live", text: `進行中，已完成 ${done}／${total} 堂` };
     }
 
     function galleryButton(key, count, label) {
@@ -417,7 +418,7 @@
     function renderProgram(c) {
         const sessions = [...(c.sessions || [])].sort((a, b) => parseDate(a.date) - parseDate(b.date));
         const range = sessions.length
-            ? `<span class="nowrap">${formatDate(sessions[0].date)} – ${formatDate(sessions[sessions.length - 1].date)}</span><span class="nowrap">・共 ${sessions.length} 堂</span>`
+            ? `<span class="nowrap">${formatDate(sessions[0].date)} – ${formatDate(sessions[sessions.length - 1].date)}</span><span class="nowrap">，共 ${sessions.length} 堂</span>`
             : "";
 
         return `
@@ -534,6 +535,51 @@
             ${renderCarousel({ title: g.title, photos: g.photos })}`;
     }
 
+    // ---------- 媒體報導頁：彙整所有活動與課程的 links ----------
+
+    function renderMedia(root, events, courses) {
+        // 已經在頁面上方精選的連結不再重複列出
+        const featured = new Set(
+            [...document.querySelectorAll("#media-featured a[href]")].map(a => a.href)
+        );
+
+        const items = [];
+        events.forEach(e => {
+            if (e.links && e.links.length) {
+                items.push({ date: e.date, type: e.type, title: e.title, links: e.links });
+            }
+        });
+        courses.forEach(c => {
+            if (c.links && c.links.length) {
+                const first = (c.sessions || []).map(x => x.date).sort()[0] || "";
+                items.push({ date: first, type: c.type, title: c.title, links: c.links });
+            }
+        });
+
+        const rows = items
+            .map(it => ({ ...it, links: it.links.filter(l => !featured.has(new URL(l.url, location.href).href)) }))
+            .filter(it => it.links.length)
+            .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+        root.innerHTML = rows.length
+            ? rows.map(it => `
+                <li class="media-row">
+                    <time datetime="${escapeHtml(it.date)}">${it.date ? formatDate(it.date) : ""}</time>
+                    <div>
+                        <h3>${escapeHtml(it.title)}</h3>
+                        <ul class="media-links">
+                            ${it.links.map(l => `
+                                <li>
+                                    <a href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer">
+                                        ${escapeHtml(l.text)}<span class="visually-hidden">（另開新視窗）</span>
+                                    </a>
+                                </li>`).join("")}
+                        </ul>
+                    </div>
+                </li>`).join("")
+            : `<li class="events-empty">其他報導整理中。</li>`;
+    }
+
     // ---------- 首頁：最新活動 ----------
 
     function renderHome(nextRoot, listRoot, upcoming, past) {
@@ -609,6 +655,13 @@
         const past = data
             .filter(e => daysUntil(e.date) < 0)
             .sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
+        // 媒體報導頁
+        const mediaList = document.getElementById("media-list");
+        if (mediaList) {
+            const courseData = Array.isArray(window.COURSES_DATA) ? window.COURSES_DATA : [];
+            renderMedia(mediaList, data, courseData);
+        }
 
         // 首頁
         const homeList = document.getElementById("home-events");
