@@ -1793,6 +1793,335 @@ button:focus-visible,
     margin-top: 0.4rem;
 }
 
+/* ---------- 人才培訓課程 ---------- */
+
+#courses {
+    display: grid;
+    gap: 2rem;
+}
+
+.course-card {
+    background: var(--ev-surface);
+    border: 1px solid var(--ev-border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
+}
+
+.course-head h3 {
+    margin: 0.6rem 0 0.4rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ev-navy);
+}
+
+.course-type {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.course-range {
+    margin: 0 0 0.75rem;
+    color: var(--ev-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.course-range .nowrap {
+    display: inline-block;
+}
+
+.course-intro {
+    margin: 0;
+    max-width: 52rem;
+    color: var(--ev-muted);
+    line-height: 1.9;
+}
+
+/* 企業客製化：左照片、右課表 */
+.course-program-body {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 2rem;
+    margin-top: 1.75rem;
+    align-items: start;
+}
+
+.course-cover,
+.class-cover {
+    margin: 0;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.course-cover {
+    aspect-ratio: 4 / 3;
+    border-radius: 1rem;
+}
+
+.course-cover img,
+.class-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 桌機版課表較長時，左側照片跟著捲動停留在畫面上 */
+@media (min-width: 992px) {
+    .course-program-media {
+        position: sticky;
+        top: 110px;
+    }
+}
+
+.course-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.75rem;
+}
+
+.course-gallery-btn,
+.course-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    border: 0;
+    background: none;
+    color: var(--ev-blue);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+.course-gallery-btn:hover,
+.course-link:hover {
+    color: #1e3a8a;
+}
+
+.session-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.session-list li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--ev-border);
+}
+
+.session-list li:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.session-when {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.session-no {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ev-green);
+}
+
+.session-when time {
+    font-size: 0.92rem;
+    color: var(--ev-muted);
+}
+
+.session-list h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ev-navy);
+}
+
+.session-list p {
+    margin: 0;
+    color: var(--ev-muted);
+    line-height: 1.8;
+}
+
+/* 在職菁英：前言 + 統計數字 + 場次卡片 */
+.course-classes-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
+    align-items: end;
+}
+
+.course-stats {
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: #eef4f0;
+}
+
+.course-stats-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.course-stat-value {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ev-green);
+    font-variant-numeric: tabular-nums;
+}
+
+.course-stat-value span {
+    margin-left: 0.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.course-stat-label {
+    margin: 0.4rem 0 0;
+    color: var(--ev-text);
+    font-size: 0.92rem;
+}
+
+.course-stats-note {
+    margin: 0.75rem 0 0;
+    color: var(--ev-muted);
+    font-size: 0.82rem;
+}
+
+.class-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+}
+
+.class-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ev-border);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.class-cover {
+    aspect-ratio: 16 / 10;
+}
+
+.class-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    flex: 1;
+}
+
+.class-status {
+    align-self: flex-start;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.class-status.is-done {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.class-status.is-live {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.class-status.is-soon {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.class-body h4 {
+    margin: 0;
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--ev-navy);
+}
+
+.class-meta {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+}
+
+.class-meta dt {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ev-green);
+}
+
+.class-meta dd {
+    margin: 0.1rem 0 0;
+    color: var(--ev-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+.class-body .course-gallery-btn {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+@media (max-width: 991.98px) {
+    .course-program-body,
+    .course-classes-top {
+        grid-template-columns: 1fr;
+    }
+
+    .course-stats {
+        justify-self: start;
+    }
+
+    .class-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .course-card {
+        padding: 1.25rem;
+    }
+
+    .class-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .session-list li {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+
+    .session-when {
+        flex-direction: row;
+        gap: 0.75rem;
+    }
+}
+
 /* ---------- Status card (join CTA) ---------- */
 
 .events-status-section {

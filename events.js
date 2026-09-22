@@ -2,6 +2,7 @@
  * 活動渲染程式
  * 讀取 events-data.js 的 window.EVENTS_DATA：
  *   - 活動頁（events.html）：頁首倒數、時間軸、即將舉行、活動回顧
+ *   - 活動頁（events.html）：人才培訓課程（讀取 window.COURSES_DATA）
  *   - 首頁（index.html）：「最新活動」區塊
  * 一般情況下不需修改本檔，新增活動請編輯 events-data.js。
  */
@@ -117,17 +118,15 @@
         return `<span class="upcoming-countdown">還有 ${days} 天</span>`;
     }
 
+    // 有報名連結才顯示「立即報名」按鈕；沒有連結時不顯示任何報名區塊
     function registrationBlock(reg) {
-        if (reg && reg.url) {
-            return `
+        if (!reg || !reg.url) return "";
+        return `
+            <div class="upcoming-actions">
                 <a class="events-cta-btn" href="${escapeHtml(reg.url)}" target="_blank" rel="noopener noreferrer">
                     立即報名 <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
-                </a>`;
-        }
-        const note = (reg && reg.note) || "報名連結開放後將於本頁公告";
-        return `
-            <button type="button" class="events-cta-btn" disabled aria-describedby="reg-note">報名即將開放</button>
-            <p class="note" id="reg-note">${escapeHtml(note)}</p>`;
+                </a>
+            </div>`;
     }
 
     function renderUpcoming(event) {
@@ -151,9 +150,7 @@
                     ${metaList(event)}
                     ${event.summary ? `<p class="upcoming-desc">${escapeHtml(event.summary)}</p>` : ""}
                     ${agendaList(event.agenda)}
-                    <div class="upcoming-actions">
-                        ${registrationBlock(event.registration)}
-                    </div>
+                    ${registrationBlock(event.registration)}
                 </div>
             </article>`;
     }
@@ -377,6 +374,166 @@
         }
     }
 
+    // ---------- 人才培訓課程 ----------
+
+    function formatShortDate(str) {
+        const d = parseDate(str);
+        return `${d.getMonth() + 1}/${d.getDate()}`;
+    }
+
+    // 依上課日期判斷場次狀態；上課當天仍算「進行中」
+    function classStatus(dates) {
+        const sorted = [...dates].sort();
+        const total = sorted.length;
+        const done = sorted.filter(d => daysUntil(d) < 0).length;
+        const todayIsClass = sorted.some(d => daysUntil(d) === 0);
+
+        if (done === total) return { key: "done", text: "已結訓" };
+        if (done === 0 && !todayIsClass) {
+            return { key: "soon", text: `即將開課・${formatShortDate(sorted[0])} 起` };
+        }
+        return { key: "live", text: `進行中・已完成 ${done}／${total} 堂` };
+    }
+
+    function galleryButton(key, count, label) {
+        if (!count) return "";
+        return `
+            <button type="button" class="course-gallery-btn"
+                    data-bs-toggle="modal" data-bs-target="#eventModal" data-gallery="${escapeHtml(key)}"
+                    aria-label="查看${escapeHtml(label)}課程照片，共 ${count} 張">
+                <i class="bi bi-images" aria-hidden="true"></i> 課程照片（${count}）
+            </button>`;
+    }
+
+    function coverFigure(photos, cls) {
+        const src = photos && photos[0] && photos[0].src;
+        if (!src) return "";
+        return `
+            <figure class="${cls}">
+                <img src="${escapeHtml(src)}" alt="" loading="lazy" width="800" height="600" data-fallback>
+            </figure>`;
+    }
+
+    function renderProgram(c) {
+        const sessions = [...(c.sessions || [])].sort((a, b) => parseDate(a.date) - parseDate(b.date));
+        const range = sessions.length
+            ? `<span class="nowrap">${formatDate(sessions[0].date)} – ${formatDate(sessions[sessions.length - 1].date)}</span><span class="nowrap">・共 ${sessions.length} 堂</span>`
+            : "";
+
+        return `
+            <article class="course-card course-program" id="course-${escapeHtml(c.id)}">
+                <header class="course-head">
+                    <span class="course-type">${escapeHtml(c.type)}</span>
+                    <h3>${escapeHtml(c.title)}</h3>
+                    ${range ? `<p class="course-range">${range}</p>` : ""}
+                    <p class="course-intro">${escapeHtml(c.intro)}</p>
+                </header>
+                <div class="course-program-body">
+                    <div class="course-program-media">
+                        ${coverFigure(c.photos, "course-cover")}
+                        <div class="course-actions">
+                            ${galleryButton(c.id, (c.photos || []).length, c.title)}
+                            ${(c.links || []).map(l => `
+                                <a class="course-link" href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer">
+                                    ${escapeHtml(l.text)} <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                                    <span class="visually-hidden">（另開新視窗）</span>
+                                </a>`).join("")}
+                        </div>
+                    </div>
+                    <ol class="session-list" aria-label="課程表">
+                        ${sessions.map((ss, i) => `
+                            <li>
+                                <div class="session-when">
+                                    <span class="session-no">第 ${i + 1} 堂</span>
+                                    <time datetime="${escapeHtml(ss.date)}">${formatDate(ss.date)}</time>
+                                </div>
+                                <div>
+                                    <h4>${escapeHtml(ss.name)}</h4>
+                                    <p>${escapeHtml(ss.outline)}</p>
+                                </div>
+                            </li>`).join("")}
+                    </ol>
+                </div>
+            </article>`;
+    }
+
+    function renderClasses(c) {
+        const stats = (c.stats || []).map(st => `
+            <div class="course-stat">
+                <p class="course-stat-value">${escapeHtml(st.value)}<span>${escapeHtml(st.unit)}</span></p>
+                <p class="course-stat-label">${escapeHtml(st.label)}</p>
+            </div>`).join("");
+
+        const classes = (c.classes || []).map(k => {
+            const status = classStatus(k.dates || []);
+            return `
+                <article class="class-card" id="course-${escapeHtml(c.id)}-${escapeHtml(k.id)}">
+                    ${coverFigure(k.photos, "class-cover")}
+                    <div class="class-body">
+                        <span class="class-status is-${status.key}">${escapeHtml(status.text)}</span>
+                        <h4>${escapeHtml(k.name)}</h4>
+                        <dl class="class-meta">
+                            <div><dt>課程日期</dt><dd>${escapeHtml(k.dateText)}</dd></div>
+                            <div><dt>授課講師</dt><dd>${escapeHtml(k.teachers)}</dd></div>
+                            <div><dt>課程內容</dt><dd>${escapeHtml(k.content)}</dd></div>
+                        </dl>
+                        ${galleryButton(`${c.id}:${k.id}`, (k.photos || []).length, k.name)}
+                    </div>
+                </article>`;
+        }).join("");
+
+        return `
+            <article class="course-card course-classes" id="course-${escapeHtml(c.id)}">
+                <div class="course-classes-top">
+                    <header class="course-head">
+                        <span class="course-type">${escapeHtml(c.type)}</span>
+                        <h3>${escapeHtml(c.title)}</h3>
+                        <p class="course-intro">${escapeHtml(c.intro)}</p>
+                    </header>
+                    ${stats ? `
+                        <div class="course-stats">
+                            <div class="course-stats-row">${stats}</div>
+                            ${c.statsNote ? `<p class="course-stats-note">${escapeHtml(c.statsNote)}</p>` : ""}
+                        </div>` : ""}
+                </div>
+                <div class="class-grid">${classes}</div>
+            </article>`;
+    }
+
+    function renderCourses(root, courses) {
+        if (!courses.length) {
+            root.innerHTML = `<p class="events-empty">課程資訊整理中。</p>`;
+            return;
+        }
+        root.innerHTML = courses
+            .map(c => (c.layout === "classes" ? renderClasses(c) : renderProgram(c)))
+            .join("");
+        attachImageFallback(root);
+    }
+
+    // 照片集：key 為 "課程id" 或 "課程id:場次id"
+    function buildGalleries(courses) {
+        const map = new Map();
+        courses.forEach(c => {
+            if (c.photos && c.photos.length) {
+                map.set(c.id, { title: c.title, subtitle: c.type, photos: c.photos });
+            }
+            (c.classes || []).forEach(k => {
+                if (k.photos && k.photos.length) {
+                    map.set(`${c.id}:${k.id}`, { title: k.name, subtitle: k.dateText, photos: k.photos });
+                }
+            });
+        });
+        return map;
+    }
+
+    function fillGallery(modal, g) {
+        modal.querySelector(".modal-title").textContent = g.title;
+        modal.querySelector(".modal-body").innerHTML = `
+            ${g.subtitle ? `<p class="text-secondary mb-3">${escapeHtml(g.subtitle)}</p>` : ""}
+            ${renderCarousel({ title: g.title, photos: g.photos })}`;
+    }
+
     // ---------- 首頁：最新活動 ----------
 
     function renderHome(nextRoot, listRoot, upcoming, past) {
@@ -478,6 +635,11 @@
         attachImageFallback(pastRoot);
         markPortraitCovers(pastRoot);
 
+        const courses = Array.isArray(window.COURSES_DATA) ? window.COURSES_DATA : [];
+        const galleries = buildGalleries(courses);
+        const coursesRoot = document.getElementById("courses");
+        if (coursesRoot) renderCourses(coursesRoot, courses);
+
         const nextRoot = document.getElementById("next-event");
         const timelineRoot = document.getElementById("events-timeline");
         if (nextRoot) renderNextEvent(nextRoot, upcoming[0]);
@@ -489,7 +651,9 @@
             modal.addEventListener("show.bs.modal", function (e) {
                 const trigger = e.relatedTarget;
                 const event = trigger && byId.get(trigger.dataset.eventId);
+                const gallery = trigger && galleries.get(trigger.dataset.gallery);
                 if (event) fillModal(modal, event);
+                else if (gallery) fillGallery(modal, gallery);
                 lastTrigger = trigger || null;
             });
 

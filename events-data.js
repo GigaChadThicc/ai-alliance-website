@@ -16,7 +16,7 @@
  *   location     活動地點
  *   summary      活動說明（即將舉行）或活動摘要（活動回顧）
  *   agenda       （選填）議程，[{ time, item }]
- *   registration （選填）報名設定，url 為 null 時顯示停用的「報名即將開放」按鈕
+ *   registration （選填）報名設定，填入 url 才會顯示「立即報名」按鈕
  *   cover        卡片封面圖（即將舉行時請放直式海報）
  *   homeImage    （選填）首頁「最新活動」使用的圖片，建議選橫式現場照；未填則用第一張照片
  *   photos       （選填）活動照片，[{ src, alt }]
@@ -42,12 +42,14 @@ window.EVENTS_DATA = [
             { time: "15:30–18:30", item: "專題座談暨觀點交流" },
             { time: "18:30–20:30", item: "貴賓餐敘" }
         ],
+        // 報名連結出來後填入 url，頁面就會出現「立即報名」按鈕
         registration: {
-            url: null,
-            note: "報名連結開放後將於本頁公告"
+            url: null
         },
-        cover: "images/events/20261001/poster.jpg",
-        photos: [],
+        cover: "images/events/20261001/04.jpg",
+        photos: [
+            { src: "images/events/20261001/04.jpg", alt: "10/01 大師講座活動海報" }
+        ],
         links: []
     },
     {
@@ -153,6 +155,131 @@ window.EVENTS_DATA = [
             {
                 text: "PChome 新聞報導",
                 url: "https://news.pchome.com.tw/living/cna/20260527/index-17798698124400418009.html"
+            }
+        ]
+    }
+];
+
+/*
+ * 人才培訓課程資料
+ * ------------------------------------------------------------
+ * 顯示在活動頁「人才培訓課程」區塊。圖片放在 images/courses/<資料夾>/。
+ *
+ * 兩種版型：
+ *   layout: "program"  單一企業的系列課程，顯示課表（sessions）
+ *   layout: "classes"  多個場次的培訓班，每個場次一張卡片（classes），
+ *                      場次狀態（已結訓／進行中／即將開課）依 dates 自動判斷
+ */
+
+window.COURSES_DATA = [
+    {
+        id: "laoyang",
+        layout: "program",
+        type: "企業客製化培訓",
+        title: "企業客製化教育訓練｜老楊食品股份有限公司",
+        intro:
+            "依企業實際轉型需求規劃系列培訓課程，涵蓋企業策略、ESG、市場分析、數據決策、AI 應用及製造服務化等主題，協助企業培育轉型人才並強化實務應用能力。",
+        sessions: [
+            {
+                date: "2026-03-20",
+                name: "企業願景建立",
+                outline: "透過企業核心價值、使命與願景（MVV）共創，結合 SWOT、TOWS 與 KPI，協助企業建立發展策略與行動方向。"
+            },
+            {
+                date: "2026-04-10",
+                name: "ESG 策略共構",
+                outline: "認識 ESG 與永續報告概念，透過小組共創盤點企業永續議題，形成 ESG 策略及具體行動方案。"
+            },
+            {
+                date: "2026-04-24",
+                name: "市場調查",
+                outline: "學習市場調查、問卷設計與數據分析，運用 OKR 將調查結果轉化為產品、價格、通路及行銷策略。"
+            },
+            {
+                date: "2026-05-08",
+                name: "數據驅動決策",
+                outline: "運用 ERP 等企業內部資料進行數據整理、視覺化與關鍵指標分析，提升數據導向的營運決策能力。"
+            },
+            {
+                date: "2026-05-15",
+                name: "AI 影片生成及內容製作",
+                outline: "運用生成式 AI 進行腳本、影像、語音及字幕製作，實作食品業短影音行銷，並建立 AI 使用與素材授權觀念。"
+            },
+            {
+                date: "2026-06-05",
+                name: "製造業服務化",
+                outline: "認識製造業服務化概念與案例，透過實作研擬企業轉型方案及行動藍圖，強化企業升級與職能轉型能力。"
+            }
+        ],
+        photos: [
+            { src: "images/courses/laoyang/01.jpg", alt: "老楊食品企業培訓課程上課情形" },
+            { src: "images/courses/laoyang/02.jpg", alt: "老楊食品企業培訓課程上課情形" },
+            { src: "images/courses/laoyang/03.jpg", alt: "老楊食品企業培訓課程上課情形" },
+            { src: "images/courses/laoyang/04.jpg", alt: "老楊食品企業培訓課程上課情形" }
+        ],
+        links: [
+            { text: "經濟日報報導", url: "https://money.udn.com/money/story/5723/9397645" }
+        ]
+    },
+    {
+        id: "ai-elite",
+        layout: "classes",
+        type: "政府補助培訓",
+        title: "AI 在職菁英課程",
+        intro:
+            "本培訓課程配合經濟部產業發展署「AI在職菁英人才培育」政策推動，主要提供符合參訓資格之製造業在職員工參與，經資格審查後錄取。課程透過政府補助培訓資源，以企業 AI 實務應用為核心，協助學員強化 AI 工具操作、數位轉型、資料應用及企業 AI 導入規劃能力。",
+        stats: [
+            { value: "118", unit: "人次", label: "累積上課人數" },
+            { value: "92.2", unit: "%", label: "課程滿意度" }
+        ],
+        // 數字更新時，記得一併修改統計時間
+        statsNote: "統計至 2026 年 9 月",
+        classes: [
+            {
+                id: "yuntech",
+                name: "企業 AI 導入與應用實作培訓班（雲科大場）",
+                dates: ["2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"],
+                dateText: "2026 年 8 月 18 日至 8 月 21 日",
+                teachers: "陳昭宏、劉彥青、盛芃鈞、吳志宏、王思翔",
+                content: "企業 AI 導入與資安、生成式 AI 行銷應用、AI 工具實作、企業資料盤點與 AI 導入分析、Vibe Coding、AI APP 與網頁工具開發及成果展示。",
+                photos: [
+                    { src: "images/courses/ai-elite-yuntech/01.jpg", alt: "雲科大場上課情形" },
+                    { src: "images/courses/ai-elite-yuntech/02.jpg", alt: "雲科大場上課情形" },
+                    { src: "images/courses/ai-elite-yuntech/03.jpg", alt: "雲科大場上課情形" },
+                    { src: "images/courses/ai-elite-yuntech/04.jpg", alt: "雲科大場上課情形" },
+                    { src: "images/courses/ai-elite-yuntech/05.jpg", alt: "雲科大場上課情形" },
+                    { src: "images/courses/ai-elite-yuntech/06.jpg", alt: "雲科大場上課情形" }
+                ]
+            },
+            {
+                id: "yuanlin",
+                name: "企業 AI 實戰應用培訓班（員林場）",
+                dates: ["2026-09-07", "2026-09-14", "2026-09-22", "2026-09-24"],
+                dateText: "2026 年 9 月 7 日、9 月 14 日、9 月 22 日、9 月 24 日",
+                teachers: "劉彥青、陳昭宏、陳慧萍、盛芃鈞、吳志宏、王思翔",
+                content: "AI 品牌行銷與內容創作、企業 AI 導入與資安風險控管、AI 工具應用、企業資料盤點與導入分析、AI 專題規劃、Vibe Coding 與 AI 應用工具開發實作。",
+                photos: [
+                    { src: "images/courses/ai-elite-yuanlin/01.jpg", alt: "員林場上課情形" },
+                    { src: "images/courses/ai-elite-yuanlin/02.jpg", alt: "員林場上課情形" },
+                    { src: "images/courses/ai-elite-yuanlin/03.jpg", alt: "員林場上課情形" },
+                    { src: "images/courses/ai-elite-yuanlin/04.jpg", alt: "員林場上課情形" }
+                ]
+            },
+            {
+                id: "yunlin",
+                name: "企業 AI 應用與實作培訓班（雲林場）",
+                dates: ["2026-09-08", "2026-09-10", "2026-09-16", "2026-09-22"],
+                dateText: "2026 年 9 月 8 日、9 月 10 日、9 月 16 日、9 月 22 日",
+                teachers: "陳昭宏、劉彥青、盛芃鈞、吳志宏、王思翔",
+                content: "企業 AI 導入與資安、生成式 AI 品牌行銷、AI 工具應用、企業資料盤點與可行性分析、AI 專題規劃，以及 Vibe Coding、AI APP 與網頁工具開發實作。",
+                photos: [
+                    { src: "images/courses/ai-elite-yunlin/01.jpg", alt: "雲林場上課情形" },
+                    { src: "images/courses/ai-elite-yunlin/02.jpg", alt: "雲林場上課情形" },
+                    { src: "images/courses/ai-elite-yunlin/03.jpg", alt: "雲林場上課情形" },
+                    { src: "images/courses/ai-elite-yunlin/04.jpg", alt: "雲林場上課情形" },
+                    { src: "images/courses/ai-elite-yunlin/05.jpg", alt: "雲林場上課情形" },
+                    { src: "images/courses/ai-elite-yunlin/06.jpg", alt: "雲林場上課情形" }
+                ]
             }
         ]
     }
