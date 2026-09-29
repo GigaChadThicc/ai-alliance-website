@@ -283,3 +283,40 @@ window.COURSES_DATA = [
         ]
     }
 ];
+
+/*
+ * 學習資源（課程精華影片與簡報）
+ * ------------------------------------------------------------
+ * 顯示在活動頁「人才培訓與學習資源 → 課程精華與學習資源」。
+ * 新增課程：複製一筆資料修改即可。第一筆以寬版呈現，其餘自動排成卡片。
+ *
+ * video.url 支援以下任一種網址（貼上即可，程式會自動轉成內嵌播放）：
+ *   YouTube：   https://www.youtube.com/watch?v=xxxx 或 https://youtu.be/xxxx
+ *   雲端硬碟：   https://drive.google.com/file/d/檔案ID/view
+ *               （需將檔案共用設定為「知道連結的任何人」）
+ *   影片檔：     images/learning/檔名.mp4
+ * slides.url   簡報連結（Google 簡報、雲端硬碟 PDF 或網站內的 PDF 檔皆可），會另開新視窗
+ * poster       （選填）影片預覽圖；YouTube 影片未填時會自動使用 YouTube 縮圖
+ * 網址留空 "" 時，按鈕會顯示為「準備中」，不會出現壞掉的連結。
+ */
+
+window.LEARNING_DATA = [
+    {
+        id: "ai-pain-point-to-tool",
+        category: "AI 應用微課程",
+        title: "從企業痛點到 AI 工具設計",
+        subtitle: "企業 AI 實戰黑客松・課程精華",
+        intro: [
+            "本次微課程節錄「企業 AI 實戰黑客松」前段核心內容，從 Vibe Coding 與 AI 協作概念出發，引導企業從日常工作情境中發掘問題，並將實際需求逐步轉化為 AI 應用構想。",
+            "課程內容包含企業痛點盤點、工作邏輯拆解、AI 協作開發流程，以及 Input、Process、Output（IPO）工具設計思維，協助學習者建立「先釐清問題，再規劃 AI 解法」的基本概念。"
+        ],
+        duration: "約 15 分鐘",
+        topics: "AI 應用／企業數位轉型",
+        instructor: "王思翔",
+        format: "課程精華影片＋簡報教材",
+        // 取得連結後貼上即可
+        video: { url: "" },
+        slides: { url: "" },
+        poster: ""
+    }
+];

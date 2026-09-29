@@ -3,6 +3,7 @@
  * 讀取 events-data.js 的 window.EVENTS_DATA：
  *   - 活動頁（events.html）：頁首倒數、時間軸、即將舉行、活動回顧
  *   - 活動頁（events.html）：人才培訓課程（讀取 window.COURSES_DATA）
+ *   - 活動頁（events.html）：課程精華與學習資源（讀取 window.LEARNING_DATA）
  *   - 首頁（index.html）：「最新活動」區塊
  *   - 媒體報導頁（cases.html）：從活動與課程的 links 自動產生報導列表
  * 一般情況下不需修改本檔，新增活動請編輯 events-data.js。
@@ -425,7 +426,7 @@
             <article class="course-card course-program" id="course-${escapeHtml(c.id)}">
                 <header class="course-head">
                     <span class="course-type">${escapeHtml(c.type)}</span>
-                    <h3>${escapeHtml(c.title)}</h3>
+                    <h4>${escapeHtml(c.title)}</h4>
                     ${range ? `<p class="course-range">${range}</p>` : ""}
                     <p class="course-intro">${escapeHtml(c.intro)}</p>
                 </header>
@@ -449,7 +450,7 @@
                                     <time datetime="${escapeHtml(ss.date)}">${formatDate(ss.date)}</time>
                                 </div>
                                 <div>
-                                    <h4>${escapeHtml(ss.name)}</h4>
+                                    <h5>${escapeHtml(ss.name)}</h5>
                                     <p>${escapeHtml(ss.outline)}</p>
                                 </div>
                             </li>`).join("")}
@@ -472,7 +473,7 @@
                     ${coverFigure(k.photos, "class-cover")}
                     <div class="class-body">
                         <span class="class-status is-${status.key}">${escapeHtml(status.text)}</span>
-                        <h4>${escapeHtml(k.name)}</h4>
+                        <h5>${escapeHtml(k.name)}</h5>
                         <dl class="class-meta">
                             <div><dt>課程日期</dt><dd>${escapeHtml(k.dateText)}</dd></div>
                             <div><dt>授課講師</dt><dd>${escapeHtml(k.teachers)}</dd></div>
@@ -488,7 +489,7 @@
                 <div class="course-classes-top">
                     <header class="course-head">
                         <span class="course-type">${escapeHtml(c.type)}</span>
-                        <h3>${escapeHtml(c.title)}</h3>
+                        <h4>${escapeHtml(c.title)}</h4>
                         <p class="course-intro">${escapeHtml(c.intro)}</p>
                     </header>
                     ${stats ? `
@@ -533,6 +534,184 @@
         modal.querySelector(".modal-body").innerHTML = `
             ${g.subtitle ? `<p class="text-secondary mb-3">${escapeHtml(g.subtitle)}</p>` : ""}
             ${renderCarousel({ title: g.title, photos: g.photos })}`;
+    }
+
+    // ---------- 課程精華與學習資源 ----------
+
+    // 把各種影片網址轉成可內嵌的播放來源
+    function parseVideo(url) {
+        const u = (url || "").trim();
+        if (!u) return null;
+
+        const yt = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+        if (yt) {
+            return {
+                kind: "iframe",
+                src: `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0`,
+                thumb: `https://i.ytimg.com/vi/${yt[1]}/hqdefault.jpg`
+            };
+        }
+
+        const drive = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);
+        if (drive) {
+            return { kind: "iframe", src: `https://drive.google.com/file/d/${drive[1]}/preview`, thumb: "" };
+        }
+
+        if (/\.(mp4|webm|m4v)(\?.*)?$/i.test(u)) {
+            return { kind: "video", src: u, thumb: "" };
+        }
+
+        return { kind: "iframe", src: u, thumb: "" };
+    }
+
+    function learningMeta(r, compact) {
+        const rows = compact
+            ? [["影片長度", r.duration], ["授課講師", r.instructor]]
+            : [["影片長度", r.duration], ["課程分類", r.topics], ["授課講師", r.instructor], ["內容形式", r.format]];
+        return `
+            <dl class="learn-meta${compact ? " is-compact" : ""}">
+                ${rows.filter(([, v]) => v).map(([k, v]) => `
+                    <div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join("")}
+            </dl>`;
+    }
+
+    function learningMedia(r) {
+        const video = parseVideo(r.video && r.video.url);
+        const poster = r.poster || (video && video.thumb) || "";
+        const posterImg = poster
+            ? `<img src="${escapeHtml(poster)}" alt="" loading="lazy" width="1280" height="720">`
+            : "";
+
+        if (!video) {
+            return `
+                <div class="learn-media is-pending" id="media-${escapeHtml(r.id)}">
+                    ${posterImg || `<svg class="learn-rings" viewBox="-500 -500 1000 1000" aria-hidden="true" focusable="false">
+                        <circle r="150"></circle><circle r="260"></circle><circle r="370"></circle><circle r="480"></circle>
+                        <circle class="dot" cx="-260" cy="0" r="9"></circle>
+                    </svg>`}
+                    <div class="learn-media-label">
+                        <span class="learn-media-title">${escapeHtml(r.title)}</span>
+                        <span>影片即將上架</span>
+                    </div>
+                </div>`;
+        }
+
+        return `
+            <div class="learn-media" id="media-${escapeHtml(r.id)}">
+                <button type="button" class="learn-facade" data-learn-play="${escapeHtml(r.id)}"
+                        aria-label="播放課程影片：${escapeHtml(r.title)}${r.duration ? `（${escapeHtml(r.duration)}）` : ""}">
+                    ${posterImg}
+                    <span class="learn-media-label">
+                        <span class="learn-media-title">${escapeHtml(r.title)}</span>
+                        ${r.duration ? `<span>${escapeHtml(r.duration)}</span>` : ""}
+                    </span>
+                    <span class="learn-play" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+                </button>
+            </div>`;
+    }
+
+    function learningActions(r) {
+        const hasVideo = !!parseVideo(r.video && r.video.url);
+        const slidesUrl = (r.slides && r.slides.url || "").trim();
+
+        const videoBtn = hasVideo
+            ? `<button type="button" class="btn btn-accent" data-learn-play="${escapeHtml(r.id)}">
+                   <span aria-hidden="true">▶</span>&nbsp;觀看課程影片
+               </button>`
+            : `<button type="button" class="btn btn-accent" disabled>
+                   <span aria-hidden="true">▶</span>&nbsp;觀看課程影片
+               </button>`;
+
+        const slidesBtn = slidesUrl
+            ? `<a class="btn btn-quiet" href="${escapeHtml(slidesUrl)}" target="_blank" rel="noopener noreferrer">
+                   <span aria-hidden="true">▣</span>&nbsp;瀏覽課程簡報<span class="visually-hidden">（另開新視窗）</span>
+               </a>`
+            : `<button type="button" class="btn btn-quiet" disabled>
+                   <span aria-hidden="true">▣</span>&nbsp;瀏覽課程簡報
+               </button>`;
+
+        const pending = [!hasVideo && "影片", !slidesUrl && "簡報"].filter(Boolean);
+        const note = pending.length
+            ? `<p class="learn-note">${pending.join("與")}連結準備中，上架後即可${pending.length === 2 ? "觀看與瀏覽" : pending[0] === "影片" ? "觀看" : "瀏覽"}。</p>`
+            : "";
+
+        return `<div class="learn-actions">${videoBtn}${slidesBtn}</div>${note}`;
+    }
+
+    function renderLearningFeature(r) {
+        return `
+            <article class="learn-feature" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
+                <div class="learn-feature-top">
+                    ${learningMedia(r)}
+                    <div class="learn-info">
+                        <span class="learn-category">${escapeHtml(r.category)}</span>
+                        <h4 id="learn-title-${escapeHtml(r.id)}">${escapeHtml(r.title)}</h4>
+                        ${r.subtitle ? `<p class="learn-subtitle">${escapeHtml(r.subtitle)}</p>` : ""}
+                        ${learningMeta(r, false)}
+                        ${learningActions(r)}
+                    </div>
+                </div>
+                ${(r.intro || []).length ? `
+                    <div class="learn-intro">
+                        <h5>課程簡介</h5>
+                        ${r.intro.map(t => `<p>${escapeHtml(t)}</p>`).join("")}
+                    </div>` : ""}
+            </article>`;
+    }
+
+    function renderLearningCard(r) {
+        return `
+            <article class="learn-card" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
+                ${learningMedia(r)}
+                <div class="learn-card-body">
+                    <span class="learn-category">${escapeHtml(r.category)}</span>
+                    <h4 id="learn-title-${escapeHtml(r.id)}">${escapeHtml(r.title)}</h4>
+                    ${r.subtitle ? `<p class="learn-subtitle">${escapeHtml(r.subtitle)}</p>` : ""}
+                    ${(r.intro || [])[0] ? `<p class="learn-excerpt">${escapeHtml(r.intro[0])}</p>` : ""}
+                    ${learningMeta(r, true)}
+                    ${learningActions(r)}
+                </div>
+            </article>`;
+    }
+
+    function renderLearning(root, items) {
+        if (!items.length) {
+            root.innerHTML = `<p class="events-empty">課程精華整理中。</p>`;
+            return;
+        }
+        const [first, ...rest] = items;
+        root.innerHTML = renderLearningFeature(first) +
+            (rest.length ? `<div class="learn-grid">${rest.map(renderLearningCard).join("")}</div>` : "");
+        attachImageFallback(root);
+
+        const byId = new Map(items.map(r => [r.id, r]));
+
+        // 點擊預覽圖或「觀看課程影片」：在原位置載入播放器
+        root.addEventListener("click", e => {
+            const trigger = e.target.closest("[data-learn-play]");
+            if (!trigger) return;
+            const r = byId.get(trigger.dataset.learnPlay);
+            const video = r && parseVideo(r.video && r.video.url);
+            const box = document.getElementById(`media-${r.id}`);
+            if (!video || !box) return;
+
+            if (!box.classList.contains("is-playing")) {
+                box.classList.add("is-playing");
+                box.innerHTML = video.kind === "video"
+                    ? `<video src="${escapeHtml(video.src)}" controls autoplay playsinline
+                              ${r.poster ? `poster="${escapeHtml(r.poster)}"` : ""}
+                              aria-label="課程影片：${escapeHtml(r.title)}"></video>`
+                    : `<iframe src="${escapeHtml(video.src)}" title="課程影片：${escapeHtml(r.title)}"
+                               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                               allowfullscreen loading="lazy"></iframe>`;
+            }
+
+            if (trigger.classList.contains("btn")) {
+                box.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+            const player = box.querySelector("iframe, video");
+            if (player) player.focus({ preventScroll: true });
+        });
     }
 
     // ---------- 媒體報導頁：彙整所有活動與課程的 links ----------
@@ -692,6 +871,11 @@
         const galleries = buildGalleries(courses);
         const coursesRoot = document.getElementById("courses");
         if (coursesRoot) renderCourses(coursesRoot, courses);
+
+        const learningRoot = document.getElementById("learning");
+        if (learningRoot) {
+            renderLearning(learningRoot, Array.isArray(window.LEARNING_DATA) ? window.LEARNING_DATA : []);
+        }
 
         const nextRoot = document.getElementById("next-event");
         const timelineRoot = document.getElementById("events-timeline");

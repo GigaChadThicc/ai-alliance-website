@@ -1939,7 +1939,7 @@ button:focus-visible,
     box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
 }
 
-.course-head h3 {
+.course-head h4 {
     margin: 0.6rem 0 0.4rem;
     font-size: clamp(1.3rem, 2.2vw, 1.6rem);
     font-weight: 700;
@@ -2076,7 +2076,7 @@ button:focus-visible,
     color: var(--ev-muted);
 }
 
-.session-list h4 {
+.session-list h5 {
     margin: 0 0 0.3rem;
     font-size: 1.05rem;
     font-weight: 700;
@@ -2186,7 +2186,7 @@ button:focus-visible,
     color: #1e40af;
 }
 
-.class-body h4 {
+.class-body h5 {
     margin: 0;
     font-size: 1.08rem;
     font-weight: 700;
@@ -2973,5 +2973,1145 @@ button:focus-visible,
 
     .media-row {
         grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================================
+   設計系統 v3（最後載入，統一全站）
+   參考：Apple（攝影為主、區塊明暗交替、單一互動色、無裝飾陰影）
+         Microsoft Fluent 2（矩形元件、4px 圓角、以細框取代陰影）
+         NVIDIA（強調色只作為訊號：按鈕、連結、焦點）
+   規則：
+     1. 中性色為主，聯盟綠 #15803d 是唯一互動色
+     2. 圓角一律 4px（標籤 2px），不使用膠囊形
+     3. 卡片與按鈕不加陰影，用 1px 細線或底色區分
+     4. 內文 17px、中文行高 1.8；標題用宋體
+   ===================================================================== */
+
+:root {
+    --ink: #1f2937;
+    --ink-muted: #4b5563;
+    --ink-faint: #555e6b;
+    --hairline: #e3e6ea;
+    --canvas: #ffffff;
+    --canvas-alt: #f4f6f5;
+    --navy: #10233f;
+    --accent: #15803d;
+    --accent-hover: #166534;
+    --accent-on-dark: #4ade80;
+    --radius: 4px;
+    --bs-link-color: #15803d;
+    --bs-link-color-rgb: 21, 128, 61;
+    --bs-link-hover-color: #166534;
+    --bs-link-hover-color-rgb: 22, 101, 52;
+}
+
+body {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--ink);
+    background: var(--canvas);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 焦點：全站一致 ---------- */
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.section-navy a:focus-visible,
+.section-navy .btn:focus-visible,
+.page-head a:focus-visible,
+.hero-orbit .btn:focus-visible,
+.events-hero a:focus-visible,
+.events-hero button:focus-visible {
+    outline-color: #ffffff;
+}
+
+/* ---------- 連結：統一為聯盟綠 ---------- */
+
+.doc-body a,
+.media-feature a,
+.media-row .media-links a,
+.past-more,
+.next-event-link,
+.course-gallery-btn,
+.course-link,
+.event-links a {
+    color: var(--accent);
+}
+
+.doc-body a:hover,
+.media-feature a:hover,
+.media-row .media-links a:hover,
+.past-more:hover,
+.next-event-link:hover,
+.course-gallery-btn:hover,
+.course-link:hover,
+.event-links a:hover {
+    color: var(--accent-hover);
+}
+
+/* ---------- 按鈕：矩形、4px、無陰影 ---------- */
+
+.btn {
+    border-radius: var(--radius) !important;
+    box-shadow: none !important;
+    font-weight: 700;
+}
+
+.btn-accent,
+.btn-success,
+.events-cta-btn,
+.hero-btn-primary,
+.doc-cta .btn {
+    min-height: 48px;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius) !important;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-accent:hover,
+.btn-accent:focus-visible,
+.btn-success:hover,
+.hero-btn-primary:hover,
+.doc-cta .btn:hover {
+    border-color: var(--accent-hover);
+    background: var(--accent-hover);
+    color: #ffffff;
+}
+
+.btn-quiet,
+.btn-outline-success,
+.hero-btn-secondary {
+    min-height: 48px;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid currentColor;
+    border-radius: var(--radius) !important;
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-quiet:hover,
+.btn-outline-success:hover {
+    background: var(--canvas-alt);
+    color: var(--ink);
+    border-color: var(--ink);
+}
+
+.hero-btn-secondary {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+/* ---------- 陰影：全部移除 ---------- */
+
+.shadow,
+.shadow-sm,
+.shadow-lg {
+    box-shadow: none !important;
+}
+
+.rounded-pill:not(.navbar-toggler) {
+    border-radius: var(--radius) !important;
+}
+
+.rounded,
+.rounded-3,
+.rounded-4 {
+    border-radius: var(--radius) !important;
+}
+
+/* ---------- 容器：細框取代陰影，統一 4px ---------- */
+
+.upcoming-card,
+.past-card,
+.course-card,
+.class-card,
+.home-event-card,
+.home-next,
+.next-event,
+.events-status-card,
+.events-empty,
+.event-modal .modal-content,
+.comparison-card,
+.membership-tip-panel,
+.pricing-card {
+    border-radius: var(--radius) !important;
+    box-shadow: none !important;
+}
+
+.upcoming-card,
+.past-card,
+.course-card,
+.class-card,
+.home-event-card,
+.home-next,
+.events-status-card {
+    border: 1px solid var(--hairline);
+    background: var(--canvas);
+}
+
+.upcoming-poster,
+.upcoming-poster img,
+.course-cover,
+.class-cover,
+.past-cover,
+.home-event-img,
+.media-feature-img,
+.event-modal .carousel,
+.course-stats {
+    border-radius: 0 !important;
+}
+
+/* 活動頁底色改為中性，與首頁一致 */
+.events-page {
+    background: var(--canvas);
+}
+
+/* ---------- 標籤：2px 小方角、中性色 ---------- */
+
+.event-type,
+.course-type,
+.class-status,
+.home-next-label,
+.status-badge,
+.plan-tag,
+.hot-badge {
+    display: inline-block;
+    padding: 0.05rem 0.5rem;
+    border: 1px solid #c9ced6;
+    border-radius: 2px !important;
+    background: transparent !important;
+    color: var(--ink-muted) !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+
+/* 只有「進行中／下一場／推薦」這類需要被注意的狀態使用強調色 */
+.class-status.is-live,
+.home-next-label,
+.plan-tag,
+.hot-badge {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+}
+
+.tl-tag {
+    border-radius: 2px;
+}
+
+/* ---------- 首頁：底色節奏 ---------- */
+
+.section-tint {
+    background-color: var(--canvas-alt);
+}
+
+.section-navy {
+    background: var(--navy);
+}
+
+/* ---------- 首頁：現場照片帶 ---------- */
+
+.photo-band {
+    background: var(--navy);
+    color: #ffffff;
+}
+
+.photo-band-figure {
+    margin: 0;
+    height: clamp(280px, 46vw, 620px);
+    overflow: hidden;
+}
+
+.photo-band-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+    display: block;
+}
+
+.photo-band-caption {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 0.5rem 3rem;
+    padding-top: 2.25rem;
+    padding-bottom: 2.75rem;
+}
+
+.photo-band-caption h2 {
+    grid-row: span 2;
+    margin: 0;
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    color: #ffffff;
+}
+
+.photo-band-caption p {
+    margin: 0;
+    max-width: 44rem;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.photo-band-caption .home-more {
+    color: var(--accent-on-dark);
+}
+
+.photo-band-caption .home-more:hover {
+    color: #ffffff;
+}
+
+/* ---------- 首頁：會員方案（中性、可比較） ---------- */
+
+.plan-cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--hairline);
+}
+
+.plan-col {
+    position: relative;
+    padding: 1.75rem 1.75rem 1.5rem 0;
+    border-top: 3px solid transparent;
+    margin-top: -2px;
+}
+
+.plan-col + .plan-col {
+    padding-left: 1.75rem;
+    border-left: 1px solid var(--hairline);
+}
+
+.plan-col.is-recommended {
+    border-top-color: var(--navy);
+}
+
+.plan-col .plan-tag {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.75rem;
+    margin: 0;
+}
+
+.plan-col h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.plan-price {
+    margin: 0 0 1.25rem;
+    font-family: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "PMingLiU", serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-price span {
+    margin-left: 0.35rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+}
+
+.plan-col ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--ink);
+}
+
+.plan-col li + li {
+    margin-top: 0.35rem;
+}
+
+.plan-col li::marker {
+    color: var(--accent);
+}
+
+/* ---------- 首頁：諮詢區 ---------- */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 2rem 4rem;
+    align-items: start;
+}
+
+.contact-grid h2 {
+    margin: 0 0 0.9rem;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: #ffffff;
+}
+
+.contact-grid p {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.contact-action {
+    padding-left: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.contact-action-title {
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+.contact-action .btn-accent {
+    margin-top: 0.5rem;
+    background: #ffffff;
+    border-color: #ffffff;
+    color: var(--navy);
+}
+
+.contact-action .btn-accent:hover {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(255, 255, 255, 0.88);
+    color: var(--navy);
+}
+
+/* ---------- 導覽列 ---------- */
+
+.site-nav {
+    border-bottom: 1px solid var(--hairline);
+}
+
+.site-nav .dropdown-menu {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(16, 35, 63, 0.08);
+    padding: 0.4rem 0;
+}
+
+.site-nav .dropdown-item {
+    font-weight: 500;
+}
+
+.site-nav .dropdown-item:hover,
+.site-nav .dropdown-item:focus {
+    background: var(--canvas-alt);
+    color: var(--ink);
+}
+
+.site-nav .btn-accent {
+    min-height: 42px;
+    padding: 0.45rem 1.25rem;
+}
+
+/* ---------- 頁尾：網站地圖 ---------- */
+
+.site-footer {
+    padding: 3.5rem 0 2rem;
+    background: var(--canvas-alt);
+    border-top: 1px solid var(--hairline);
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) repeat(3, minmax(0, 3fr));
+    gap: 2rem;
+    padding-bottom: 2.5rem;
+}
+
+.footer-name {
+    margin: 0 0 0.75rem;
+    font-family: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "PMingLiU", serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.footer-brand p:not(.footer-name) {
+    margin: 0 0 0.75rem;
+    line-height: 1.8;
+}
+
+.footer-title {
+    margin: 0 0 0.6rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.footer-col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-col a {
+    display: inline-block;
+    padding: 0.3rem 0;
+    color: var(--ink-muted);
+    text-decoration: none;
+}
+
+.footer-col a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hairline);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+}
+
+.footer-legal p {
+    margin: 0;
+}
+
+/* ---------- 會員頁 ---------- */
+
+.membership-hero {
+    background: var(--canvas);
+}
+
+.membership-hero h1 {
+    color: var(--navy);
+}
+
+.membership-highlights li {
+    padding-left: 1rem;
+    position: relative;
+}
+
+.membership-highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+}
+
+.membership-page,
+.membership-benefits {
+    background: var(--canvas);
+}
+
+.pricing-card {
+    border: 1px solid var(--hairline) !important;
+    background: var(--canvas);
+    overflow: visible;
+}
+
+.pricing-card-core {
+    border-top: 3px solid var(--navy) !important;
+}
+
+.pricing-header,
+.pricing-header.bg-general,
+.pricing-header.bg-core,
+.pricing-header.bg-honorary {
+    background: transparent !important;
+    color: var(--navy) !important;
+    border-bottom: 1px solid var(--hairline);
+    border-radius: 0 !important;
+}
+
+.pricing-header h3,
+.pricing-header .plan-description {
+    color: inherit !important;
+}
+
+.pricing-header .plan-description {
+    color: var(--ink-muted) !important;
+}
+
+.feature-list .bi {
+    color: var(--accent) !important;
+}
+
+.hot-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    left: auto;
+    transform: none;
+    z-index: 2;
+}
+
+.membership-tip-panel {
+    background: var(--canvas-alt) !important;
+    border: 0 !important;
+    border-left: 3px solid var(--navy) !important;
+}
+
+.membership-tip-stats > div {
+    border-radius: var(--radius) !important;
+    background: var(--canvas) !important;
+    box-shadow: none !important;
+}
+
+.comparison-card {
+    padding: 0;
+    background: transparent;
+}
+
+.section-heading h2 {
+    color: var(--navy);
+}
+
+/* ---------- 活動頁細節 ---------- */
+
+.events-hero .next-event {
+    border: 0;
+}
+
+.countdown-num,
+.upcoming-countdown,
+.session-no,
+.class-meta dt {
+    color: var(--accent);
+}
+
+.home-event-card:hover h3,
+.past-card:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* ---------- 響應式 ---------- */
+
+@media (max-width: 991.98px) {
+    .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-action {
+        padding-left: 0;
+        padding-top: 1.5rem;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .photo-band-caption {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-band-caption h2 {
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body {
+        font-size: 1rem;
+    }
+
+    .plan-cols {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-col,
+    .plan-col + .plan-col {
+        padding: 1.5rem 0;
+        border-left: 0;
+    }
+
+    .plan-col + .plan-col {
+        border-top: 1px solid var(--hairline);
+    }
+
+    .plan-col.is-recommended {
+        border-top: 3px solid var(--navy);
+    }
+
+    .plan-col .plan-tag {
+        top: 1.5rem;
+        right: 0;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* 會員頁：區塊標題靠左、方案適用說明改為純文字 */
+.section-heading {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+}
+
+.plan-fit {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ink-muted);
+    font-weight: 500;
+}
+
+.pricing-footer {
+    border-top: 1px solid var(--hairline);
+    padding-top: 1rem;
+}
+
+.membership-comparison-table thead th {
+    background: var(--navy) !important;
+    color: #ffffff !important;
+}
+
+/* 自我檢視修正：陰影、圓角、對比 */
+.site-nav,
+.navbar.site-nav {
+    box-shadow: none !important;
+}
+
+.hot-badge {
+    box-shadow: none !important;
+}
+
+.membership-comparison-table,
+.custom-table {
+    border-radius: 0 !important;
+    overflow: visible;
+}
+
+.tl-node {
+    border-radius: var(--radius);
+}
+
+.membership-tip-panel .text-secondary,
+.section-heading .text-secondary,
+.price-box .text-secondary {
+    color: var(--ink-muted) !important;
+}
+
+.course-stats {
+    background: var(--canvas-alt);
+}
+
+.course-stat-value span {
+    color: var(--accent-hover);
+}
+
+/* Bootstrap 5.3 以 inset box-shadow 繪製表格底色；此表無斑馬紋，直接移除 */
+.membership-comparison-table > :not(caption) > * > * {
+    box-shadow: none;
+}
+
+/* =========================
+   人才培訓與學習資源
+   ========================= */
+
+.training-intro {
+    max-width: 48rem;
+    margin: 0 0 2.5rem;
+    color: var(--ink-muted);
+    line-height: 1.9;
+}
+
+.training-part + .training-part {
+    margin-top: 3.5rem;
+}
+
+.training-subhead {
+    margin: 0 0 1.25rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--navy);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--navy);
+}
+
+/* ---------- 精選課程（寬版） ---------- */
+
+.learn-feature {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--canvas);
+}
+
+.learn-feature-top {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.learn-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem 2rem;
+}
+
+.learn-info h4,
+.learn-card-body h4 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--navy);
+}
+
+.learn-card-body h4 {
+    font-size: 1.15rem;
+}
+
+.learn-subtitle {
+    margin: -0.35rem 0 0;
+    color: var(--ink-muted);
+}
+
+.learn-category {
+    align-self: flex-start;
+    padding: 0.05rem 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+.learn-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0.25rem 0 0.25rem;
+    border-top: 1px solid var(--hairline);
+}
+
+.learn-meta > div {
+    padding: 0.7rem 0.75rem 0.7rem 0;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.learn-meta > div:nth-child(even) {
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--hairline);
+}
+
+.learn-meta dt {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.learn-meta dd {
+    margin: 0.1rem 0 0;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.learn-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+}
+
+.learn-actions .btn {
+    min-height: 46px;
+    padding: 0.6rem 1.15rem;
+}
+
+.learn-actions .btn:disabled {
+    opacity: 1;
+    background: #eef0f2;
+    border-color: #d5d9de;
+    color: #5b6472;
+    cursor: not-allowed;
+}
+
+.learn-note {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+}
+
+.learn-intro {
+    padding: 1.75rem 2rem 2rem;
+    border-top: 1px solid var(--hairline);
+}
+
+.learn-intro h5 {
+    margin: 0 0 0.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.learn-intro p {
+    max-width: 52rem;
+    margin: 0 0 0.9rem;
+    color: var(--ink);
+    line-height: 1.95;
+}
+
+.learn-intro p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- 影片區：16:9，點擊後才載入播放器 ---------- */
+
+.learn-media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--navy);
+    overflow: hidden;
+}
+
+.learn-media > img,
+.learn-facade > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.learn-facade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.learn-media-label {
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.learn-media-title {
+    font-family: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "PMingLiU", serif;
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* 有預覽圖時，在文字下方加一層深色底，確保文字可讀 */
+.learn-media img ~ .learn-media-label,
+.learn-facade img ~ .learn-media-label {
+    padding: 0.75rem 1rem;
+    background: rgba(16, 35, 63, 0.82);
+}
+
+.learn-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: rgba(16, 35, 63, 0.55);
+    font-size: 2.2rem;
+    color: #ffffff;
+    transform: translate(-50%, -50%);
+}
+
+.learn-facade:hover .learn-play,
+.learn-facade:focus-visible .learn-play {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.learn-facade:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: -6px;
+}
+
+/* 尚未上架：以同心圓呼應首頁，不放假的播放鍵 */
+.learn-rings {
+    position: absolute;
+    top: 50%;
+    right: -18%;
+    width: 80%;
+    height: auto;
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.learn-rings circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.learn-rings .dot {
+    fill: #4ade80;
+    stroke: none;
+}
+
+.learn-media.is-playing iframe,
+.learn-media.is-playing video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000000;
+}
+
+/* ---------- 其他課程卡片（第二筆起） ---------- */
+
+.learn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.learn-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--canvas);
+    overflow: hidden;
+}
+
+.learn-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    padding: 1.25rem;
+}
+
+.learn-excerpt {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.learn-meta.is-compact > div {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* ---------- 響應式 ---------- */
+
+@media (max-width: 991.98px) {
+    .learn-feature-top {
+        grid-template-columns: 1fr;
+    }
+
+    .learn-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .learn-info,
+    .learn-intro {
+        padding: 1.25rem;
+    }
+
+    .learn-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .learn-actions .btn {
+        flex: 1 1 100%;
+    }
+
+    .learn-play {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+}
+
+/* 小卡片：影片區只保留長度，標題已在卡片下方，避免與播放鍵重疊 */
+.learn-card .learn-media-title {
+    display: none;
+}
+
+.learn-card .learn-media-label {
+    left: 0.9rem;
+    right: auto;
+    bottom: 0.8rem;
+    font-size: 0.88rem;
+}
+
+.learn-card .learn-play {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+}
+
+/* 手機：精選影片區同樣只保留長度，避免播放鍵與標題重疊 */
+@media (max-width: 767.98px) {
+    .learn-feature .learn-media-title {
+        display: none;
+    }
+
+    .learn-feature .learn-media-label {
+        left: 0.9rem;
+        right: auto;
+        bottom: 0.8rem;
+        font-size: 0.88rem;
     }
 }

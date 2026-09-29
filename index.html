@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
+<body>
     <a class="skip-link visually-hidden-focusable" href="#main-content">跳到主要內容</a>
 
 
@@ -92,6 +92,17 @@
         </div>
     </section>
 
+    <section class="photo-band" aria-labelledby="photo-band-title">
+        <figure class="photo-band-figure">
+            <img src="images/events/20260527/02.jpg" alt="大師講座現場，講者於台前簡報，與會企業主管圍坐會議桌聆聽" width="1600" height="1200" loading="lazy">
+        </figure>
+        <div class="container photo-band-caption">
+            <h2 id="photo-band-title">大師講座現場</h2>
+            <p>2026 年 5 月 27 日，聯盟首場大師講座於劍湖山渡假大飯店舉行，旭榮集團黃冠華執行董事以「旭榮集團如何走向 ACE 之路！」為題，分享紡織供應鏈導入 AI、組織賦能與 ESG 的轉型實務。</p>
+            <a class="home-more" href="events.html#event-20260527">查看這場講座的紀錄</a>
+        </div>
+    </section>
+
     <section id="latest-events" class="section-tint py-5" aria-labelledby="latest-events-title">
         <div class="container py-4">
             <div class="home-head">
@@ -110,79 +121,57 @@
                 <h2>加入聯盟，共創加值經濟</h2>
                 <p>提供分級制權益服務，滿足不同規模企業的轉型需求</p>
             </div>
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 border-primary border-opacity-50 shadow-sm card-hover">
-                        <div class="card-header bg-primary text-white text-center py-3">
-                            <h5 class="mb-0 fw-bold">一般會員</h5>
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="fw-bold my-3">$3,000 <small class="text-muted fs-6">/ 年</small></h3>
-                            <ul class="list-unstyled text-start mt-4 lh-lg">
-                                <li><i class="bi bi-check-circle-fill text-primary me-2" aria-hidden="true"></i>教育訓練自由參加 (上限 5 人次)</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2" aria-hidden="true"></i>參加產業趨勢論壇與講座活動</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2" aria-hidden="true"></i>加入會員專屬群組共享最新資訊</li>
-                                <li><i class="bi bi-star-fill text-warning me-2" aria-hidden="true"></i><b>專家或技術人員診斷 1 次</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 border-dark border-opacity-25 shadow-sm card-hover position-relative">
-                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">推薦方案</span>
-                        <div class="card-header bg-dark text-white text-center py-3">
-                            <h5 class="mb-0 fw-bold">核心會員</h5>
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="fw-bold my-3">$20,000 <small class="text-muted fs-6">/ 年</small></h3>
-                            <ul class="list-unstyled text-start mt-4 lh-lg">
-                                <li><i class="bi bi-check-circle-fill text-dark me-2" aria-hidden="true"></i>包含一般會員所有權益</li>
-                                <li><i class="bi bi-check-circle-fill text-dark me-2" aria-hidden="true"></i>教育訓練升級至 <b>10 人次</b></li>
-                                <li><i class="bi bi-check-circle-fill text-dark me-2" aria-hidden="true"></i><b>專家訪廠診斷 1 次</b></li>
-                                <li><i class="bi bi-star-fill text-warning me-2" aria-hidden="true"></i><b>接受 2 次技術輔導或顧問諮詢</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 border-warning border-opacity-75 shadow-sm card-hover">
-                        <div class="card-header bg-warning text-dark text-center py-3">
-                            <h5 class="mb-0 fw-bold">榮譽會員</h5>
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="fw-bold my-3">$50,000 <small class="text-muted fs-6">/ 年</small></h3>
-                            <ul class="list-unstyled text-start mt-4 lh-lg">
-                                <li><i class="bi bi-check-circle-fill text-warning me-2" aria-hidden="true"></i>包含核心會員所有權益</li>
-                                <li><i class="bi bi-check-circle-fill text-warning me-2" aria-hidden="true"></i>教育訓練升級至 <b>15 人次</b></li>
-                                <li><i class="bi bi-check-circle-fill text-warning me-2" aria-hidden="true"></i>訪廠診斷升級為 <b>2 次 (附AI診斷表)</b></li>
-                                                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="plan-cols">
+                <article class="plan-col">
+                    
+                    <h3>一般會員</h3>
+                    <p class="plan-price">$3,000<span>/ 年</span></p>
+                    <ul>
+                        <li>教育訓練自由參加 (上限 5 人次)</li>
+                        <li>參加產業趨勢論壇與講座活動</li>
+                        <li>加入會員專屬群組共享最新資訊</li>
+                        <li><b>專家或技術人員診斷 1 次</b></li>
+                    </ul>
+                </article>
+                <article class="plan-col is-recommended">
+                    <p class="plan-tag">推薦方案</p>
+                    <h3>核心會員</h3>
+                    <p class="plan-price">$20,000<span>/ 年</span></p>
+                    <ul>
+                        <li>包含一般會員所有權益</li>
+                        <li>教育訓練升級至 <b>10 人次</b></li>
+                        <li><b>專家訪廠診斷 1 次</b></li>
+                        <li><b>接受 2 次技術輔導或顧問諮詢</b></li>
+                    </ul>
+                </article>
+                <article class="plan-col">
+                    
+                    <h3>榮譽會員</h3>
+                    <p class="plan-price">$50,000<span>/ 年</span></p>
+                    <ul>
+                        <li>包含核心會員所有權益</li>
+                        <li>教育訓練升級至 <b>15 人次</b></li>
+                        <li>訪廠診斷升級為 <b>2 次 (附AI診斷表)</b></li>
+                    </ul>
+                </article>
             </div>
+            <p class="mt-4 mb-0"><a class="home-more" href="membership.html">比較完整會員權益</a></p>
         </div>
     </section>
 
-    <section id="contact" class="section-navy py-5 text-white">
+    <section id="contact" class="section-navy py-5 text-white" aria-labelledby="contact-title">
         <div class="container py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8 text-center mb-4">
-                    <h2 class="fw-bold">準備好啟動企業轉型了嗎？</h2>
-                    <p class="text-light">點擊下方按鈕前往填寫線上諮詢表單，我們將由專案團隊與您聯繫，協助評估最適合的方案。</p>
+            <div class="contact-grid">
+                <div>
+                    <h2 id="contact-title">準備好啟動企業轉型了嗎？</h2>
+                    <p>點擊下方按鈕前往填寫線上諮詢表單，我們將由專案團隊與您聯繫，協助評估最適合的方案。</p>
                 </div>
-                <div class="col-md-5 text-center">
-                    <div class="bg-white text-dark p-5 rounded shadow card-hover">
-                        <i class="bi bi-ui-radios display-4 text-success mb-3 d-block" aria-hidden="true"></i>
-                        <h4 class="fw-bold mb-3">線上諮詢申請</h4>
-                        <p class="text-muted mb-4">我們透過 SurveyCake 系統收集您的轉型需求，只需短短幾分鐘即可完成填寫。</p>
-                        
-                        <a href="https://www.surveycake.com/s/QyApK" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm" aria-label="前往填寫表單（另開新視窗）">
-                            前往填寫表單 <i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i>
-                        </a>
-                        
-                    </div>
+                <div class="contact-action">
+                    <p class="contact-action-title">線上諮詢申請</p>
+                    <p>我們透過 SurveyCake 系統收集您的轉型需求，只需短短幾分鐘即可完成填寫。</p>
+                    <a href="https://www.surveycake.com/s/QyApK" target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+                        前往填寫表單<span class="visually-hidden">（另開新視窗）</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -190,9 +179,44 @@
     </main>
 
 
-    <footer class="bg-light text-center py-4">
-        <div class="container text-muted">
-            <p class="mb-0">© 2026 國立雲林科技大學 數位AI和永續治理企業轉型服務產學聯盟. All Rights Reserved.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <p class="footer-name">數位AI和永續治理產學聯盟</p>
+                    <p>國立雲林科技大學<br>永續發展暨價值管理中心</p>
+                    <p>雲林縣斗六市大學路三段 123 號<br>產學研大樓 A1612 辦公室</p>
+                </div>
+                <nav class="footer-col" aria-label="聯盟願景">
+                    <p class="footer-title">聯盟願景</p>
+                    <ul>
+                        <li><a href="about.html">關於聯盟</a></li>
+                        <li><a href="goals.html">核心目標</a></li>
+                        <li><a href="resources.html">實績與資源</a></li>
+                        <li><a href="cases.html">影音新聞與媒體報導</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-col" aria-label="核心服務">
+                    <p class="footer-title">核心服務</p>
+                    <ul>
+                        <li><a href="solutions.html">解決方案與服務管道</a></li>
+                        <li><a href="sustainability.html">組織碳盤查與永續治理</a></li>
+                        <li><a href="transformation.html">企業轉型服務技術</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-col" aria-label="參與聯盟">
+                    <p class="footer-title">參與聯盟</p>
+                    <ul>
+                        <li><a href="membership.html">會員專區</a></li>
+                        <li><a href="events.html">活動與課程</a></li>
+                        <li><a href="https://www.surveycake.com/s/QyApK" target="_blank" rel="noopener noreferrer">線上諮詢申請<span class="visually-hidden">（另開新視窗）</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-legal">
+                <p>© 2026 國立雲林科技大學 數位AI和永續治理企業轉型服務產學聯盟</p>
+                <p>本聯盟由國家科學及技術委員會計畫補助</p>
+            </div>
         </div>
     </footer>
 
