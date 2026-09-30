@@ -610,6 +610,7 @@
             </div>`;
     }
 
+    // 影片按鈕一定顯示；簡報按鈕只有在 slides.url 有填時才出現
     function learningActions(r) {
         const hasVideo = !!parseVideo(r.video && r.video.url);
         const slidesUrl = (r.slides && r.slides.url || "").trim();
@@ -626,42 +627,41 @@
             ? `<a class="btn btn-quiet" href="${escapeHtml(slidesUrl)}" target="_blank" rel="noopener noreferrer">
                    <span aria-hidden="true">▣</span>&nbsp;瀏覽課程簡報<span class="visually-hidden">（另開新視窗）</span>
                </a>`
-            : `<button type="button" class="btn btn-quiet" disabled>
-                   <span aria-hidden="true">▣</span>&nbsp;瀏覽課程簡報
-               </button>`;
-
-        const pending = [!hasVideo && "影片", !slidesUrl && "簡報"].filter(Boolean);
-        const note = pending.length
-            ? `<p class="learn-note">${pending.join("與")}連結準備中，上架後即可${pending.length === 2 ? "觀看與瀏覽" : pending[0] === "影片" ? "觀看" : "瀏覽"}。</p>`
             : "";
+
+        const note = hasVideo ? "" : `<p class="learn-note">影片連結準備中，上架後即可觀看。</p>`;
 
         return `<div class="learn-actions">${videoBtn}${slidesBtn}</div>${note}`;
     }
 
     function renderLearningFeature(r) {
+        const portrait = r.orientation === "portrait";
+        const intro = (r.intro || []).length ? `
+                    <div class="learn-intro">
+                        <h5>課程簡介</h5>
+                        ${r.intro.map(t => `<p>${escapeHtml(t)}</p>`).join("")}
+                    </div>` : "";
+
         return `
-            <article class="learn-feature" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
+            <article class="learn-feature${portrait ? " is-portrait" : ""}" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
                 <div class="learn-feature-top">
-                    ${learningMedia(r)}
+                    ${portrait ? `<div class="learn-media-col">${learningMedia(r)}</div>` : learningMedia(r)}
                     <div class="learn-info">
                         <span class="learn-category">${escapeHtml(r.category)}</span>
                         <h4 id="learn-title-${escapeHtml(r.id)}">${escapeHtml(r.title)}</h4>
                         ${r.subtitle ? `<p class="learn-subtitle">${escapeHtml(r.subtitle)}</p>` : ""}
                         ${learningMeta(r, false)}
                         ${learningActions(r)}
+                        ${portrait ? intro : ""}
                     </div>
                 </div>
-                ${(r.intro || []).length ? `
-                    <div class="learn-intro">
-                        <h5>課程簡介</h5>
-                        ${r.intro.map(t => `<p>${escapeHtml(t)}</p>`).join("")}
-                    </div>` : ""}
+                ${portrait ? "" : intro}
             </article>`;
     }
 
     function renderLearningCard(r) {
         return `
-            <article class="learn-card" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
+            <article class="learn-card${r.orientation === "portrait" ? " is-portrait" : ""}" id="learn-${escapeHtml(r.id)}" aria-labelledby="learn-title-${escapeHtml(r.id)}">
                 ${learningMedia(r)}
                 <div class="learn-card-body">
                     <span class="learn-category">${escapeHtml(r.category)}</span>

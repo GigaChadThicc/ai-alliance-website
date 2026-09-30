@@ -4115,3 +4115,72 @@ button:focus-visible,
         font-size: 0.88rem;
     }
 }
+
+/* =========================
+   直式影片（9:16）
+   影片欄固定寬度，右欄放課程資訊與簡介，避免 16:9 框裡出現大片黑邊
+   ========================= */
+
+.learn-feature.is-portrait .learn-feature-top {
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+}
+
+/* 影片欄以深藍色填滿整個卡片高度，右欄較長時下方不會露出白色空隙 */
+.learn-media-col {
+    background: var(--navy);
+}
+
+.learn-feature.is-portrait .learn-media,
+.learn-card.is-portrait .learn-media {
+    aspect-ratio: 9 / 16;
+}
+
+.learn-feature.is-portrait .learn-info {
+    padding: 2rem 2.25rem;
+}
+
+.learn-feature.is-portrait .learn-actions {
+    margin-top: 0.25rem;
+}
+
+/* 簡介移進右欄後，改用細線與上方分隔 */
+.learn-feature.is-portrait .learn-intro {
+    margin-top: 0.75rem;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--hairline);
+}
+
+/* 直式影片框內的文字標籤，避免與中央播放鍵重疊 */
+.learn-feature.is-portrait .learn-media-title {
+    font-size: 1.1rem;
+}
+
+@media (max-width: 991.98px) {
+    .learn-feature.is-portrait .learn-feature-top {
+        grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    }
+
+    .learn-feature.is-portrait .learn-info {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .learn-feature.is-portrait .learn-feature-top {
+        grid-template-columns: 1fr;
+    }
+
+    .learn-media-col {
+        padding: 0;
+    }
+
+    /* 手機：影片置中，高度不超過畫面約八成，不必捲動就能看到整支影片 */
+    .learn-feature.is-portrait .learn-media {
+        width: min(100%, calc(78vh * 9 / 16));
+        margin: 0 auto;
+    }
+
+    .learn-feature.is-portrait .learn-info {
+        padding: 1.25rem;
+    }
+}

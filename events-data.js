@@ -295,9 +295,10 @@ window.COURSES_DATA = [
  *   雲端硬碟：   https://drive.google.com/file/d/檔案ID/view
  *               （需將檔案共用設定為「知道連結的任何人」）
  *   影片檔：     images/learning/檔名.mp4
- * slides.url   簡報連結（Google 簡報、雲端硬碟 PDF 或網站內的 PDF 檔皆可），會另開新視窗
+ * slides.url   （選填）簡報連結；有填才會顯示「瀏覽課程簡報」按鈕，留空則不顯示
+ * orientation  影片方向："landscape"（橫式 16:9，預設）或 "portrait"（直式 9:16）
  * poster       （選填）影片預覽圖；YouTube 影片未填時會自動使用 YouTube 縮圖
- * 網址留空 "" 時，按鈕會顯示為「準備中」，不會出現壞掉的連結。
+ * video.url 留空時，「觀看課程影片」按鈕會顯示為「準備中」，不會出現壞掉的連結。
  */
 
 window.LEARNING_DATA = [
@@ -313,8 +314,8 @@ window.LEARNING_DATA = [
         duration: "約 15 分鐘",
         topics: "AI 應用／企業數位轉型",
         instructor: "王思翔",
-        format: "課程精華影片＋簡報教材",
-        // 取得連結後貼上即可
+        format: "課程精華影片",
+        orientation: "portrait",
         video: { url: "https://drive.google.com/file/d/1LFIv26BvniiC2iRAk-eSlfzlYWu6Yn0x/view?usp=sharing" },
         slides: { url: "" },
         poster: ""
