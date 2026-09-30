@@ -315,7 +315,6 @@ window.LEARNING_DATA = [
         topics: "AI 應用／企業數位轉型",
         instructor: "王思翔",
         format: "課程精華影片",
-        orientation: "portrait",
         video: { url: "https://drive.google.com/file/d/1LFIv26BvniiC2iRAk-eSlfzlYWu6Yn0x/view?usp=sharing" },
         slides: { url: "" },
         poster: ""
